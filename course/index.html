@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Human in the Loop</title>
+<meta name="description" content="A self-paced course on using AI and screens in ways that protect your body, mind and spirit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#EEF2EC;
+  --surface:#FFFFFF;
+  --surface-2:#E3EAE1;
+  --ink:#18261E;
+  --ink-2:#4A5C51;
+  --line:#CBD6CA;
+  --moss:#2F6B45;
+  --moss-ink:#FFFFFF;
+  --moss-soft:#D7E8DA;
+  --sky:#5E93AA;
+  --sky-soft:#DCEBF1;
+  --amber:#B06A12;
+  --amber-soft:#F6E6CD;
+  --good:#2F6B45;
+  --bad:#A53A2A;
+  --bad-soft:#F5DCD6;
+  --shadow:0 1px 2px rgba(24,38,30,.06),0 8px 24px rgba(24,38,30,.07);
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0F1612; --surface:#17211B; --surface-2:#1E2B23; --ink:#E3ECE4; --ink-2:#A3B5A8; --line:#2C3C32;
+    --moss:#7DBB8F; --moss-ink:#0F1612; --moss-soft:#1F3627; --sky:#8CBCD0; --sky-soft:#1B2E36;
+    --amber:#E6A95A; --amber-soft:#35291A; --good:#7DBB8F; --bad:#E58B7A; --bad-soft:#3A221D;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0F1612; --surface:#17211B; --surface-2:#1E2B23; --ink:#E3ECE4; --ink-2:#A3B5A8; --line:#2C3C32;
+  --moss:#7DBB8F; --moss-ink:#0F1612; --moss-soft:#1F3627; --sky:#8CBCD0; --sky-soft:#1B2E36;
+  --amber:#E6A95A; --amber-soft:#35291A; --good:#7DBB8F; --bad:#E58B7A; --bad-soft:#3A221D;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+a{color:var(--moss)}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+button{font:inherit;cursor:pointer}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar__in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:1.05rem;display:flex;align-items:center;gap:8px;margin-right:auto;color:var(--ink);text-decoration:none}
+.brand__dot{width:12px;height:12px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 4px var(--moss-soft)}
+.coach{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:.8rem}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip b{font-weight:600}
+.chip--eye b{color:var(--sky)}
+.chip--move b{color:var(--amber)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:10px;padding:10px 16px;font-weight:700;background:var(--moss);color:var(--moss-ink);text-decoration:none;transition:transform .12s ease,filter .12s ease}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translateY(1px)}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn--small{padding:6px 12px;font-size:.85rem;border-radius:8px}
+.btn--sky{background:var(--sky);color:#0D1A20}
+.btn--amber{background:var(--amber);color:#1E1406}
+
+/* ---------- layout ---------- */
+.shell{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:880px){.shell{grid-template-columns:minmax(0,1fr);gap:20px}}
+.nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);display:flex;flex-direction:column;gap:14px}
+@media (max-width:880px){.nav{position:static}}
+.progress{display:flex;flex-direction:column;gap:6px}
+.progress__bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.progress__fill{height:100%;width:0;background:var(--moss);transition:width .4s ease}
+.progress__txt{font-family:var(--mono);font-size:.78rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.modlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+@media (max-width:880px){.modlist{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px;scrollbar-width:thin}}
+.modlist a{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--ink);text-decoration:none;font-size:.95rem;line-height:1.3}
+@media (max-width:880px){.modlist a{white-space:nowrap;grid-template-columns:24px auto;border:1px solid var(--line);background:var(--surface)}}
+.modlist a:hover{background:var(--surface-2)}
+.modlist a[aria-current="page"]{background:var(--surface);box-shadow:var(--shadow);font-weight:700}
+.modlist .num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:.75rem;border:1.5px solid var(--line);color:var(--ink-2)}
+@media (max-width:880px){.modlist .num{width:22px;height:22px}}
+.modlist a.done .num{background:var(--moss);border-color:var(--moss);color:var(--moss-ink)}
+.side-note{font-size:.82rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:12px}
+@media (max-width:880px){.side-note{display:none}}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:center;margin-bottom:36px}
+@media (max-width:760px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero p.lead{font-size:1.12rem;color:var(--ink-2);max-width:60ch;margin-top:14px}
+.hero__cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.horizon{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:5/4;max-width:100%;background:var(--sky-soft);border:1px solid var(--line)}
+.horizon canvas{width:100%;height:100%;display:block}
+.horizon__cap{position:absolute;left:12px;bottom:10px;right:12px;font-family:var(--mono);font-size:.72rem;color:var(--ink);background:color-mix(in srgb,var(--surface) 82%,transparent);padding:6px 9px;border-radius:8px}
+
+/* ---------- module ---------- */
+.module{display:flex;flex-direction:column;gap:22px}
+.module[hidden]{display:none!important}
+.mhead{display:flex;flex-direction:column;gap:8px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.mhead .meta{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:.76rem;color:var(--ink-2)}
+.prose{display:flex;flex-direction:column;gap:14px;max-width:68ch}
+.prose ul,.prose ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.prose strong{color:var(--ink)}
+.callout{padding:16px 18px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px;max-width:72ch}
+.callout--myth{background:var(--amber-soft);border-color:transparent}
+.callout--key{background:var(--moss-soft);border-color:transparent}
+.callout--sky{background:var(--sky-soft);border-color:transparent}
+.callout .label{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}}
+.card{padding:16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.card h3{font-size:1.02rem}
+.card p{font-size:.95rem;color:var(--ink-2)}
+.src{font-size:.82rem;color:var(--ink-2)}
+.src a{color:var(--ink-2)}
+
+/* comparison: employee vs manager */
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+@media (max-width:620px){.roles{grid-template-columns:minmax(0,1fr)}}
+.roles>div{padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.roles>div+div{border-left:1px solid var(--line)}
+@media (max-width:620px){.roles>div+div{border-left:0;border-top:1px solid var(--line)}}
+.roles ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px;font-size:.95rem}
+.tag{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:3px 8px;border-radius:6px;letter-spacing:.04em}
+.tag--you{background:var(--moss-soft);color:var(--ink)}
+.tag--ai{background:var(--sky-soft);color:var(--ink)}
+.tag--both{background:var(--amber-soft);color:var(--ink)}
+
+/* exercises */
+.exercise{padding:18px;border-radius:16px;background:var(--surface);border:1.5px dashed var(--line);display:flex;flex-direction:column;gap:14px}
+.exercise>header{display:flex;flex-direction:column;gap:4px}
+.sorter{display:flex;flex-direction:column;gap:10px}
+.sort-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+@media (max-width:620px){.sort-item{grid-template-columns:minmax(0,1fr)}}
+.sort-item .opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 10px;font-size:.82rem}
+.opt[aria-pressed="true"]{border-color:var(--ink);font-weight:700}
+.sort-item .why{grid-column:1/-1;font-size:.9rem;color:var(--ink-2);display:none}
+.sort-item.answered .why{display:block}
+.sort-item.right{border-color:var(--good)}
+.sort-item.wrong{border-color:var(--amber)}
+.verdict{font-weight:700}
+.verdict.right{color:var(--good)}
+.verdict.wrong{color:var(--amber)}
+
+/* prompt cards */
+.prompt{border-radius:14px;border:1px solid var(--line);background:var(--surface);overflow:hidden}
+.prompt__head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:var(--surface-2);flex-wrap:wrap}
+.prompt__head h3{font-size:.98rem}
+.prompt pre{margin:0;padding:14px;font-family:var(--mono);font-size:.84rem;line-height:1.55;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+
+/* quiz */
+.quiz{padding:20px;border-radius:16px;background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:18px}
+.quiz fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.quiz legend{font-weight:700;margin-bottom:6px;padding:0}
+.qopt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
+.qopt input{margin-top:5px;accent-color:var(--moss)}
+.qopt.is-right{border-color:var(--good);background:var(--moss-soft)}
+.qopt.is-wrong{border-color:var(--bad);background:var(--bad-soft)}
+.qexp{font-size:.92rem;color:var(--ink-2);display:none}
+.quiz.checked .qexp{display:block}
+.quiz__foot{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:.9rem}
+
+/* self check sliders */
+.sliders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:620px){.sliders{grid-template-columns:minmax(0,1fr)}}
+.slider{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.slider label{font-weight:700;display:flex;justify-content:space-between;gap:8px}
+.slider output{font-family:var(--mono);color:var(--moss)}
+.slider small{color:var(--ink-2)}
+input[type=range]{width:100%;accent-color:var(--moss)}
+
+/* plan builder */
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:620px){.checks{grid-template-columns:minmax(0,1fr)}}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:.95rem;cursor:pointer}
+.checks input{margin-top:5px;accent-color:var(--moss)}
+.checks h4{grid-column:1/-1;margin:10px 0 0;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.plan-out{font-family:var(--mono);font-size:.84rem;white-space:pre-wrap;padding:16px;border-radius:12px;background:var(--bg);border:1px solid var(--line);min-height:120px}
+
+/* settings row */
+.settings{display:flex;gap:14px;flex-wrap:wrap;align-items:end}
+.settings label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--ink-2)}
+.settings select{font:inherit;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+
+.mfoot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}
+
+/* ---------- break overlay ---------- */
+.overlay{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(6px)}
+.breakcard{width:min(520px,100%);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);padding:24px;display:flex;flex-direction:column;gap:16px;text-align:center;align-items:center;max-height:calc(100vh - 32px);overflow:auto}
+.ring{position:relative;width:170px;height:170px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .track{stroke:var(--surface-2)}
+.ring .arc{stroke:var(--moss);stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.ring .t{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:2rem;font-variant-numeric:tabular-nums}
+.breakcard .step{font-family:var(--display);font-size:1.35rem;font-weight:700}
+.breakcard .hint{color:var(--ink-2);max-width:40ch}
+.breakcard .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.steps-list{font-family:var(--mono);font-size:.8rem;color:var(--ink-2);display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.steps-list span{padding:3px 8px;border-radius:6px;background:var(--surface-2)}
+.steps-list span.on{background:var(--amber-soft);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;z-index:60}
+
+footer.foot{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:0 40px;color:var(--ink-2);font-size:.85rem;display:flex;flex-direction:column;gap:6px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="brand" href="#m1"><span class="brand__dot" aria-hidden="true"></span>Human in the Loop</a>
+    <div class="coach" aria-live="polite">
+      <span class="chip chip--eye" title="Next eye break">eyes <b id="eyeLeft">20:00</b></span>
+      <span class="chip chip--move" title="Next movement break">move <b id="moveLeft">60:00</b></span>
+      <button class="btn btn--small" id="coachToggle" type="button">Start break coach</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="nav" aria-label="Course modules">
+    <div class="progress">
+      <div class="progress__bar"><div class="progress__fill" id="progFill"></div></div>
+      <div class="progress__txt" id="progTxt">0 of 8 modules complete</div>
+    </div>
+    <ol class="modlist" id="modlist"></ol>
+    <p class="side-note">Your progress, answers and plan are saved in this browser only. This course is educational and is not medical advice. See a professional for persistent eye, pain, sleep or mood problems.</p>
+  </aside>
+
+  <main id="main">
+
+  <!-- ================= MODULE 1 ================= -->
+  <section class="module" id="m1" data-title="Why this matters">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">A self-paced course · 8 modules · about 90 minutes</p>
+        <h1 style="margin-top:10px">Use AI and screens without losing your eyes, your focus or yourself.</h1>
+        <p class="lead">Technology is a powerful tool. Used carelessly, it strains the eyes, stiffens the body, drains the mind and crowds out quiet. This course teaches small, repeatable habits that let you get the benefits and keep your health, your judgment and your inner life intact.</p>
+        <div class="hero__cta">
+          <a class="btn" href="#m2">Begin module 2</a>
+          <button class="btn btn--ghost" type="button" data-try="eye">Try a 20-second eye break</button>
+        </div>
+      </div>
+      <div class="horizon">
+        <canvas id="horizon" aria-hidden="true"></canvas>
+        <p class="horizon__cap">Focus target: about 6 m / 20 ft away. At that distance your eye's focusing muscle relaxes.</p>
+      </div>
+    </div>
+
+    <div class="mhead">
+      <p class="eyebrow">Module 1</p>
+      <h2>Why this matters: body, mind and spirit</h2>
+      <div class="meta"><span>~8 min</span><span>Self-check</span></div>
+    </div>
+
+    <div class="prose">
+      <p>Most of us now spend 7 to 10 waking hours a day looking at a screen. AI tools add a new kind of load on top of that: they are fast, always available, and they invite us to hand over not just chores but our thinking. That can be a gift or a slow loss, depending on how we use them.</p>
+      <p>This course looks at three layers of health, because each one is affected differently:</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><span class="tag tag--ai">Body</span><h3>Eyes, posture, movement</h3><p>Close focus for hours, fewer blinks, evening light that delays sleep, and long periods of stillness.</p></div>
+      <div class="card"><span class="tag tag--both">Mind</span><h3>Attention, memory, judgment</h3><p>Mental fatigue from constant evaluation, and skills that fade when we stop using them.</p></div>
+      <div class="card"><span class="tag tag--you">Spirit</span><h3>Meaning, presence, connection</h3><p>Intention, quiet, creativity and relationships that need unhurried, human time.</p></div>
+    </div>
+
+    <div class="callout callout--key">
+      <span class="label">The core idea of this course</span>
+      <p><strong>AI is your employee, not your manager.</strong> You set direction, make the decisions, and keep the creative and moral work. AI does well-defined tasks, and you check its work. Every habit in this course supports that relationship.</p>
+    </div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Exercise · Baseline self-check</p><h3>Where are you starting from?</h3><p class="src">Rate the last typical week. There are no right answers. You will see these numbers again in your personal plan.</p></header>
+      <div class="sliders" id="sliders"></div>
+    </div>
+
+    <div class="mfoot"><span></span><button class="btn" type="button" data-complete="m1">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 2 ================= -->
+  <section class="module" id="m2" data-title="Eyes and light" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 2</p>
+      <h2>Eyes and light: blue light, eye breaks and looking far</h2>
+      <div class="meta"><span>~12 min</span><span>Practice: 20-20-20</span><span>Quiz</span></div>
+    </div>
+
+    <div class="prose">
+      <h3>What actually tires your eyes</h3>
+      <p>"Digital eye strain" (also called computer vision syndrome) shows up as tired, dry, burning or blurry eyes, headaches and a stiff neck. Three things cause most of it:</p>
+      <ol>
+        <li><strong>Holding close focus.</strong> To see a screen at 50 to 70 cm, a small ring muscle inside the eye (the ciliary muscle) stays contracted. Hours of that is like holding a light weight at arm's length all day.</li>
+        <li><strong>Blinking less.</strong> People blink roughly half as often while concentrating on a screen, and many blinks are incomplete. The tear film dries out.</li>
+        <li><strong>A poor setup.</strong> Glare, a screen brighter or darker than the room, text that is too small, and a monitor set too high all add strain.</li>
+      </ol>
+    </div>
+
+    <div class="callout callout--myth">
+      <span class="label">Blue light: what the evidence says</span>
+      <p><strong>Screens are not damaging your retina.</strong> A phone or monitor gives off a small fraction of the blue light you get from being outdoors on a cloudy day. A 2023 Cochrane review found that blue-light-filtering glasses probably do not reduce eye strain from computer use.</p>
+      <p><strong>Where blue light does matter is sleep.</strong> Bright, blue-rich light in the evening tells your brain it is still daytime. It suppresses melatonin and can push back your sleep. That is a real effect on your body, and it builds up night after night.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><h3>Evening light habits</h3><p>Turn on Night Shift, Night Light or a warm display filter from sunset. Dim screens and room lights after dark. Aim for 60 minutes screen-free before bed, and keep the phone charging outside the bedroom.</p></div>
+      <div class="card"><h3>Morning light habits</h3><p>Get 10 to 20 minutes of outdoor daylight soon after waking, even when it is cloudy. Morning light sets your body clock, so you feel sleepy at the right time later. For children, time outdoors is also linked to lower rates of short-sightedness.</p></div>
+    </div>
+
+    <div class="prose">
+      <h3>The 20-20-20 rule, and why green and far away help</h3>
+      <p><strong>Every 20 minutes, look at something at least 20 feet (6 metres) away for at least 20 seconds.</strong> Distance lets the focusing muscle relax fully. Blink slowly a few times while you do it to re-wet your eyes.</p>
+      <p>If you can, look out of a window at trees, a garden, the sky or a far horizon. Green, natural scenes do more than rest the eyes. In a 2015 study from the University of Melbourne, people who glanced at a green roof for 40 seconds made fewer errors on a following attention task than people who looked at a concrete roof. Researchers link this to "attention restoration": nature holds our attention softly, so the effortful kind can recover.</p>
+      <p>Twenty minutes can feel frequent. Treat the 20-20-20 break as a tiny habit that costs 20 seconds. Then, <strong>every 1 to 2 hours, take a longer "green break" of 5 to 10 minutes</strong>, ideally outside or at a window, with no screen at all.</p>
+    </div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Practice · 20 seconds</p><h3>Do one now</h3><p class="src">Find the farthest point you can see, preferably something green. Start the timer and keep your eyes there until it ends.</p></header>
+      <div><button class="btn btn--sky" type="button" data-try="eye">Start a 20-second far-focus break</button></div>
+    </div>
+
+    <div class="prose">
+      <h3>Set up your screen</h3>
+      <ul>
+        <li><strong>Distance:</strong> about an arm's length (50 to 70 cm) from your eyes.</li>
+        <li><strong>Height:</strong> top of the screen at or slightly below eye level, so you look slightly down.</li>
+        <li><strong>Brightness:</strong> match the brightness of the room. A glowing screen in a dark room is hard on the eyes.</li>
+        <li><strong>Glare:</strong> put the screen side-on to windows, not facing them or with them behind it.</li>
+        <li><strong>Text size:</strong> make it larger than you think you need. Squinting is a sign to zoom in.</li>
+        <li><strong>Dry eyes:</strong> blink on purpose, keep air vents away from your face, and ask a pharmacist about preservative-free lubricating drops.</li>
+        <li><strong>Checkups:</strong> an uncorrected prescription causes strain that no habit will fix. Have an eye exam every one to two years.</li>
+      </ul>
+    </div>
+
+    <div class="quiz" data-quiz="m2"></div>
+    <div class="mfoot"><a class="btn btn--ghost" href="#m1">Back</a><button class="btn" type="button" data-complete="m2">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 3 ================= -->
+  <section class="module" id="m3" data-title="Body and micro-movement" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 3</p>
+      <h2>Body: posture and micro-movement breaks</h2>
+      <div class="meta"><span>~10 min</span><span>Practice: 2-minute routine</span><span>Quiz</span></div>
+    </div>
+
+    <div class="prose">
+      <p>The problem with long screen sessions is less about "bad posture" and more about <strong>staying still for too long</strong>. Muscles and joints like variety. Any position gets uncomfortable if you hold it for hours. The best posture is your next one.</p>
+      <p>A micro-movement break takes one to three minutes. You do it every 30 to 60 minutes, and it needs no equipment or change of clothes. Short, frequent breaks help circulation, blood sugar and stiffness more than one long workout at the end of a day spent sitting.</p>
+    </div>
+
+    <div class="grid2" id="moveCards"></div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Practice · 2 minutes</p><h3>Follow a guided micro-movement break</h3><p class="src">The coach walks you through six movements, 20 seconds each. Move gently and stay within a pain-free range.</p></header>
+      <div><button class="btn btn--amber" type="button" data-try="move">Start the 2-minute routine</button></div>
+    </div>
+
+    <div class="callout">
+      <span class="label">Build movement into the work itself</span>
+      <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px">
+        <li>Stand up while the AI is generating a long answer.</li>
+        <li>Take phone calls and voice notes standing or walking.</li>
+        <li>Keep your water glass small, so refilling it becomes a regular walk.</li>
+        <li>Alternate sitting and standing if you have an adjustable desk. Standing all day is not the goal either.</li>
+      </ul>
+    </div>
+
+    <div class="quiz" data-quiz="m3"></div>
+    <div class="mfoot"><a class="btn btn--ghost" href="#m2">Back</a><button class="btn" type="button" data-complete="m3">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 4 ================= -->
+  <section class="module" id="m4" data-title="Mental fatigue and breaks" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 4</p>
+      <h2>Mind: why extended AI use is exhausting, and how to rest</h2>
+      <div class="meta"><span>~12 min</span><span>Break coach setup</span><span>Quiz</span></div>
+    </div>
+
+    <div class="prose">
+      <p>Many people notice that a long session with an AI assistant leaves them more drained than the same hours of ordinary work. It can feel like you did very little and yet you are exhausted. There are good reasons for this.</p>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>Constant evaluation</h3><p>Every answer has to be read, judged and checked. You become a full-time reviewer, and reviewing is effortful work.</p></div>
+      <div class="card"><h3>No natural pauses</h3><p>Answers arrive in seconds, so the small rests that slower work gives you (waiting, walking, looking things up) disappear.</p></div>
+      <div class="card"><h3>Too many options</h3><p>AI can generate ten versions of anything. Choosing between endless options causes decision fatigue.</p></div>
+      <div class="card"><h3>Context switching</h3><p>Jumping between chats, tabs and tasks has a real cost. Each switch leaves part of your attention behind.</p></div>
+    </div>
+
+    <div class="callout callout--sky">
+      <span class="label">Signs you need a break now</span>
+      <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px">
+        <li>You are re-reading the same paragraph or answer.</li>
+        <li>You accept outputs without really checking them.</li>
+        <li>You are stuck in a "just one more prompt" loop.</li>
+        <li>You feel irritable, restless, or your jaw and shoulders are tight.</li>
+        <li>You cannot remember what you did in the last hour.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <h3>A rhythm that works</h3>
+      <ol>
+        <li><strong>Start with your own head.</strong> Spend 5 minutes with pen and paper on the goal and your first ideas before opening any AI tool.</li>
+        <li><strong>Work in time boxes of 25 to 50 minutes.</strong> Decide what you want out of each block before it starts.</li>
+        <li><strong>Take a 20-second eye break every 20 minutes</strong> and a <strong>2 to 5 minute movement break</strong> at the end of each block.</li>
+        <li><strong>Every 90 minutes or so, step away for 10 to 20 minutes.</strong> Go outside, eat, talk to someone, or sit quietly. Scrolling a phone is not a break for the mind or the eyes.</li>
+        <li><strong>End each session with a recap.</strong> Write three lines: what you did, what you decided, and what is next. Then ask the AI to quiz you on it (module 6).</li>
+        <li><strong>Set a daily limit.</strong> Decide when intensive AI work ends for the day, and protect some screen-free hours.</li>
+      </ol>
+    </div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Tool · Break coach</p><h3>Set your reminders</h3><p class="src">The break coach in the top bar reminds you while this page is open in a tab. Choose intervals that fit your work, then press Start. It plays a soft chime and opens a guided break.</p></header>
+      <div class="settings">
+        <label for="eyeInt">Eye break every
+          <select id="eyeInt"><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option></select>
+        </label>
+        <label for="moveInt">Movement break every
+          <select id="moveInt"><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select>
+        </label>
+        <label for="chime">Sound
+          <select id="chime"><option value="on">Soft chime</option><option value="off">Silent</option></select>
+        </label>
+        <button class="btn" type="button" id="coachToggle2">Start break coach</button>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz="m4"></div>
+    <div class="mfoot"><a class="btn btn--ghost" href="#m3">Back</a><button class="btn" type="button" data-complete="m4">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 5 ================= -->
+  <section class="module" id="m5" data-title="Employee, not manager" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 5</p>
+      <h2>Keep your thinking: AI as employee, not manager</h2>
+      <div class="meta"><span>~15 min</span><span>Exercise: delegation sorter</span><span>Quiz</span></div>
+    </div>
+
+    <div class="prose">
+      <p>Skills you stop using get weaker. Researchers call handing mental work to a tool <strong>cognitive offloading</strong>. It is often useful: we offload phone numbers to our contacts list and arithmetic to calculators. The risk is offloading the capacities that make us who we are.</p>
+      <p>Early research points the same way. A 2025 survey of knowledge workers by Microsoft Research and Carnegie Mellon found that the more people trusted AI, the less critical thinking they reported doing. A 2025 MIT Media Lab study found that people who wrote essays with ChatGPT showed lower brain engagement and remembered less of what "they" had written. These studies are small and early, but the direction is consistent with what we know about learning: <strong>effort is how the brain builds skill</strong>.</p>
+    </div>
+
+    <div class="callout callout--key">
+      <span class="label">Three things to keep for yourself</span>
+      <p><strong>Creativity.</strong> Generate your own ideas first. Your first rough idea is where your voice lives. Use AI later to stretch, test or polish, not to replace the spark.</p>
+      <p><strong>Decision-making.</strong> AI can lay out options and trade-offs. The choice, and responsibility for it, stays with you. Decisions are a skill, and you keep it only by making them.</p>
+      <p><strong>Discernment.</strong> Judging what is true, good, wise and right for your life cannot be delegated. AI can be confidently wrong, and it does not know your values, your body or your relationships.</p>
+    </div>
+
+    <div class="roles">
+      <div>
+        <span class="tag tag--you">You are the manager</span>
+        <ul>
+          <li>Set the goal and why it matters</li>
+          <li>Generate the first ideas</li>
+          <li>Decide between options</li>
+          <li>Judge quality, truth and fit</li>
+          <li>Own the result and its consequences</li>
+        </ul>
+      </div>
+      <div>
+        <span class="tag tag--ai">AI is the employee</span>
+        <ul>
+          <li>Drafts, formats and summarizes</li>
+          <li>Lists options and trade-offs you asked for</li>
+          <li>Does repetitive or mechanical steps</li>
+          <li>Argues against your idea when asked</li>
+          <li>Reports back for review, never ships on its own</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h3>How a good manager briefs an employee</h3>
+      <ul>
+        <li><strong>Give a clear task, not a vague wish.</strong> "Summarize these notes into five bullet points for my team" rather than "help me with this."</li>
+        <li><strong>State what you have already decided.</strong> This keeps the AI from quietly deciding for you.</li>
+        <li><strong>Ask for options, not answers,</strong> when a judgment call is involved.</li>
+        <li><strong>Review everything.</strong> You would not sign a document an intern wrote without reading it.</li>
+        <li><strong>Notice when you are asking to be told what to do.</strong> Questions like "what should I do?" or "which is better?" are your cue to decide for yourself.</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Exercise · Delegation sorter</p><h3>Who should do this task?</h3><p class="src">For each task, pick who should own it. You'll see the suggested answer and the reason.</p></header>
+      <div class="sorter" id="sorter"></div>
+      <p class="score" id="sortScore"></p>
+    </div>
+
+    <div class="quiz" data-quiz="m5"></div>
+    <div class="mfoot"><a class="btn btn--ghost" href="#m4">Back</a><button class="btn" type="button" data-complete="m5">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 6 ================= -->
+  <section class="module" id="m6" data-title="Stay sharp: quiz yourself" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 6</p>
+      <h2>Stay sharp: ask AI to quiz you</h2>
+      <div class="meta"><span>~10 min</span><span>6 copy-ready prompts</span><span>Quiz</span></div>
+    </div>
+
+    <div class="prose">
+      <p>The same tool that can make you mentally lazy can make you sharper. The difference is whether it does your thinking or <strong>makes you think</strong>.</p>
+      <p>One of the most reliable findings in learning science is the <strong>testing effect</strong>: pulling information out of your memory strengthens it far more than re-reading it. In a well-known 2006 study by Roediger and Karpicke, students who practised recalling a text remembered much more a week later than students who re-read it several times.</p>
+      <p>So after you learn or create something with AI, turn the tables: have it question you. Answer before you look anything up. Being a little wrong is part of how it works.</p>
+    </div>
+
+    <div class="callout">
+      <span class="label">When to use these</span>
+      <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px">
+        <li>At the end of any AI session longer than 30 minutes</li>
+        <li>After AI helps you with code, a document, or research you will need to defend</li>
+        <li>The next morning, to check what stuck</li>
+        <li>Before you rely on a new skill without the tool</li>
+      </ul>
+    </div>
+
+    <div id="prompts" style="display:flex;flex-direction:column;gap:14px"></div>
+
+    <div class="quiz" data-quiz="m6"></div>
+    <div class="mfoot"><a class="btn btn--ghost" href="#m5">Back</a><button class="btn" type="button" data-complete="m6">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 7 ================= -->
+  <section class="module" id="m7" data-title="Spirit and presence" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 7</p>
+      <h2>Spirit: intention, presence and unplugged time</h2>
+      <div class="meta"><span>~10 min</span><span>Reflection</span><span>Quiz</span></div>
+    </div>
+
+    <div class="prose">
+      <p>Whatever "spirit" means to you (faith, meaning, inner quiet, connection to nature or to other people), it needs things that screens tend to crowd out: <strong>silence, slowness, presence and real contact</strong>. You don't have to give technology up. You need to decide where it stops.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><h3>Open with intention</h3><p>Before you open an app or a chat, pause for one breath and name why you are opening it. If you can't name a reason, you may not need to open it.</p></div>
+      <div class="card"><h3>Protect the edges of the day</h3><p>Keep the first 30 to 60 minutes after waking and the last hour before sleep screen-free. Use them for light, movement, prayer, reflection, journaling or people.</p></div>
+      <div class="card"><h3>Keep relationships human</h3><p>Don't let AI write your words of love, grief, apology or gratitude. They matter because they cost you something and come from you.</p></div>
+      <div class="card"><h3>Make things by hand</h3><p>Write, draw, cook, garden or play music without a screen. Creating with your hands grounds you in your body and in the present.</p></div>
+      <div class="card"><h3>Keep a weekly unplugged block</h3><p>Choose a few hours or a whole day each week with no AI and minimal screens. Many traditions keep a sabbath. The idea works for anyone.</p></div>
+      <div class="card"><h3>Let yourself be bored</h3><p>Boredom and quiet are where insight, rest and self-knowledge show up. Try not to fill every pause with input.</p></div>
+    </div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Reflection · 3 minutes, off screen if you can</p><h3>Three questions to answer honestly</h3></header>
+      <ol style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px">
+        <li>When did technology last make my life genuinely better? When did it last leave me feeling emptier?</li>
+        <li>What do I want to always do myself, even if AI could do it faster?</li>
+        <li>What would I do with one screen-free hour a day?</li>
+      </ol>
+      <label for="reflect" class="src">Optional: write your answers here. They are saved in this browser only.</label>
+      <textarea id="reflect" rows="5" style="width:100%;font:inherit;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical"></textarea>
+    </div>
+
+    <div class="quiz" data-quiz="m7"></div>
+    <div class="mfoot"><a class="btn btn--ghost" href="#m6">Back</a><button class="btn" type="button" data-complete="m7">Mark complete and continue</button></div>
+  </section>
+
+  <!-- ================= MODULE 8 ================= -->
+  <section class="module" id="m8" data-title="Your personal plan" hidden>
+    <div class="mhead">
+      <p class="eyebrow">Module 8</p>
+      <h2>Your personal plan</h2>
+      <div class="meta"><span>~10 min</span><span>Plan builder</span></div>
+    </div>
+
+    <div class="prose">
+      <p>Habits stick when they are small, specific and tied to something you already do. Choose <strong>three to five</strong> habits to start with. When they feel automatic in two or three weeks, add more.</p>
+    </div>
+
+    <div class="exercise">
+      <header><p class="eyebrow">Plan builder</p><h3>Pick your starting habits</h3></header>
+      <div class="checks" id="habits"></div>
+    </div>
+
+    <div class="exercise">
+      <header style="flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div><p class="eyebrow">Your plan</p><h3>Copy it to your notes or print it by hand</h3></div>
+        <button class="btn btn--small" type="button" id="copyPlan">Copy plan</button>
+      </header>
+      <div class="plan-out" id="planOut"></div>
+    </div>
+
+    <div class="callout callout--key">
+      <span class="label">Check back in two weeks</span>
+      <p>Return to the self-check in module 1 and rate yourself again. Notice what changed in your eyes, body, focus and sense of peace. Keep what works, and drop what doesn't.</p>
+    </div>
+
+    <div class="mfoot"><a class="btn btn--ghost" href="#m7">Back</a><button class="btn" type="button" data-complete="m8">Finish the course</button></div>
+  </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Human in the Loop is an educational course and does not replace advice from a doctor, optometrist, physiotherapist or mental health professional.</p>
+  <p>The body text is set in Atkinson Hyperlegible, a typeface the Braille Institute designed to be easier to read for people with low vision.</p>
+</footer>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="breakcard" role="dialog" aria-modal="true" aria-labelledby="bTitle">
+    <p class="eyebrow" id="bKind">Eye break</p>
+    <h2 id="bTitle" style="font-size:1.5rem">Look far away</h2>
+    <div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"></circle><circle class="arc" id="bArc" cx="60" cy="60" r="52"></circle></svg><div class="t" id="bTime">20</div></div>
+    <p class="step" id="bStep">Find something green</p>
+    <p class="hint" id="bHint">Look out of a window at the farthest point you can see. Blink slowly.</p>
+    <div class="steps-list" id="bSteps"></div>
+    <div class="row">
+      <button class="btn btn--ghost" type="button" id="bSnooze">Remind me in 5 min</button>
+      <button class="btn" type="button" id="bDone">Done</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "hitl-course-v1";
+  var state = {done:{}, quiz:{}, sort:{}, sliders:{}, habits:{}, reflect:"", eyeInt:20, moveInt:60, chime:"on"};
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved) Object.assign(state, saved); } catch(e) {}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} }
+  function $(s, r){ return (r||document).querySelector(s); }
+  function $$(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+  function el(tag, attrs, html){ var e = document.createElement(tag); if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]); if (html != null) e.innerHTML = html; return e; }
+  function toast(msg){ var t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(function(){ t.hidden = true; }, 2200); }
+
+  /* ---------- navigation ---------- */
+  var modules = $$(".module");
+  var list = $("#modlist");
+  modules.forEach(function(m, i){
+    var li = el("li");
+    var a = el("a", {href:"#"+m.id, "data-id":m.id}, '<span class="num">'+(i+1)+'</span><span>'+m.dataset.title+'</span>');
+    li.appendChild(a); list.appendChild(li);
+  });
+  function show(id){
+    if (!document.getElementById(id) || !/^m\d$/.test(id)) id = "m1";
+    modules.forEach(function(m){ m.hidden = m.id !== id; });
+    $$("a", list).forEach(function(a){ if (a.dataset.id === id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+    var cur = $('a[data-id="'+id+'"]', list); if (cur && cur.scrollIntoView && window.innerWidth <= 880) cur.scrollIntoView({block:"nearest", inline:"center"});
+  }
+  function route(){ show((location.hash || "#m1").slice(1)); window.scrollTo(0,0); }
+  window.addEventListener("hashchange", route);
+  show((location.hash || "#m1").slice(1));
+
+  function renderProgress(){
+    var n = modules.filter(function(m){ return state.done[m.id]; }).length;
+    $("#progFill").style.width = (n / modules.length * 100) + "%";
+    $("#progTxt").textContent = n + " of " + modules.length + " modules complete";
+    $$("a", list).forEach(function(a){ a.classList.toggle("done", !!state.done[a.dataset.id]); });
+  }
+  $$("[data-complete]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = b.dataset.complete; state.done[id] = true; save(); renderProgress();
+      var idx = modules.findIndex(function(m){ return m.id === id; });
+      if (idx < modules.length - 1) location.hash = modules[idx+1].id;
+      else toast("Course complete. Well done. Now close the laptop and go look at a tree.");
+    });
+  });
+  renderProgress();
+
+  /* ---------- horizon canvas ---------- */
+  (function(){
+    var c = $("#horizon"); if (!c) return; var ctx = c.getContext("2d");
+    function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+    function draw(){
+      var r = c.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+      c.width = r.width * d; c.height = r.height * d; ctx.setTransform(d,0,0,d,0,0);
+      var w = r.width, h = r.height;
+      ctx.fillStyle = css("--sky-soft"); ctx.fillRect(0,0,w,h);
+      var layers = [[0.52,0.25],[0.62,0.45],[0.74,0.7],[0.88,1]];
+      var moss = css("--moss"), bg = css("--sky-soft");
+      layers.forEach(function(L, li){
+        ctx.beginPath(); ctx.moveTo(0,h);
+        for (var x = 0; x <= w; x += 4){
+          var y = h*L[0] + Math.sin(x/(60+li*25) + li*1.7)*h*0.035 + Math.sin(x/(23+li*9) + li)*h*0.012;
+          ctx.lineTo(x,y);
+        }
+        ctx.lineTo(w,h); ctx.closePath();
+        ctx.fillStyle = moss; ctx.globalAlpha = L[1]; ctx.fill(); ctx.globalAlpha = 1;
+      });
+      // focus ring on far ridge
+      var fx = w*0.68, fy = h*0.47;
+      ctx.strokeStyle = css("--ink"); ctx.lineWidth = 1.5; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.arc(fx, fy, 18, 0, Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(fx-26,fy); ctx.lineTo(fx-12,fy); ctx.moveTo(fx+12,fy); ctx.lineTo(fx+26,fy); ctx.moveTo(fx,fy-26); ctx.lineTo(fx,fy-12); ctx.moveTo(fx,fy+12); ctx.lineTo(fx,fy+26); ctx.stroke();
+      ctx.fillStyle = css("--ink"); ctx.font = "600 11px " + css("--mono");
+      ctx.fillText("6 m +", fx + 24, fy - 18);
+      void bg;
+    }
+    draw(); window.addEventListener("resize", draw);
+    if (window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+    new MutationObserver(draw).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+  })();
+
+  /* ---------- sliders ---------- */
+  var SLIDERS = [
+    ["eyes","Eyes","How rested do your eyes feel at the end of the day?"],
+    ["body","Body","How loose and comfortable does your body feel after screen time?"],
+    ["focus","Focus","How clear and sharp does your mind feel after using AI?"],
+    ["sleep","Sleep","How well do you fall asleep and wake up rested?"],
+    ["own","Own thinking","How much do you still generate ideas and decide for yourself?"],
+    ["peace","Peace","How often do you feel present, quiet and connected?"]
+  ];
+  var sl = $("#sliders");
+  SLIDERS.forEach(function(s){
+    var v = state.sliders[s[0]] || 3;
+    var d = el("div",{class:"slider"}, '<label for="sl-'+s[0]+'">'+s[1]+' <output id="out-'+s[0]+'">'+v+' / 5</output></label><input type="range" min="1" max="5" step="1" id="sl-'+s[0]+'" value="'+v+'"><small>'+s[2]+'</small>');
+    sl.appendChild(d);
+    $("input", d).addEventListener("input", function(e){ state.sliders[s[0]] = +e.target.value; $("#out-"+s[0]).textContent = e.target.value + " / 5"; save(); renderPlan(); });
+  });
+
+  /* ---------- movement cards ---------- */
+  var MOVES = [
+    ["Neck release","Drop your chin gently toward your chest, then roll slowly from ear to ear in a half circle. No full circles backward."],
+    ["Shoulder rolls","Lift your shoulders to your ears, squeeze, then roll them back and down. Repeat slowly five times."],
+    ["Chest opener","Clasp your hands behind your back or hold the chair, lift your chest and draw your shoulder blades together. Breathe."],
+    ["Wrists and hands","Circle your wrists both ways, spread your fingers wide, then make soft fists. Shake your hands out."],
+    ["Seated twist","Sit tall, place one hand on the opposite knee and rotate gently from the ribs. Switch sides."],
+    ["Stand and rise","Stand up, do ten slow calf raises, and reach both arms overhead. Walk a few steps if you can."],
+    ["Palming","Rub your palms warm and cup them over closed eyes for a few breaths, without pressing on the eyeballs."],
+    ["Slow breathing","Breathe in for 4, hold for 4, out for 6. Longer out-breaths help calm the nervous system."]
+  ];
+  var mc = $("#moveCards");
+  MOVES.forEach(function(m){ mc.appendChild(el("div",{class:"card"},"<h3>"+m[0]+"</h3><p>"+m[1]+"</p>")); });
+  var ROUTINE = [MOVES[0],MOVES[1],MOVES[2],MOVES[3],MOVES[4],MOVES[5]];
+
+  /* ---------- delegation sorter ---------- */
+  var SORT = [
+    ["Formatting a bibliography in APA style","ai","Mechanical, rule-based and easy to check. A perfect employee task."],
+    ["Choosing which job offer to accept","you","A life decision that depends on your values, family and gut sense. AI can list questions to consider. You decide."],
+    ["Naming your new project or business","both","Write your own ideas first. Then ask AI to riff on them or critique them, and you make the final choice."],
+    ["Summarizing a 90-minute meeting transcript","ai","Good delegation, as long as you check it against what you remember and fix what it missed."],
+    ["Deciding whether a symptom needs a doctor","you","Discernment about your own body belongs with you and a medical professional. AI can help you prepare questions."],
+    ["Writing a condolence note to a friend","you","The words matter because they come from you. A clumsy, sincere note beats a polished generated one."],
+    ["Turning messy notes into a table","ai","Structured transformation work. Review it, but let it do the tedious part."],
+    ["Judging whether an article's claims are trustworthy","both","AI can find sources and point out weak spots. Weighing credibility and truth is your discernment to exercise."],
+    ["Setting your priorities for the next year","you","Values and direction are the manager's job. You can use AI afterwards to break your goals into steps."],
+    ["Drafting a routine reply to a scheduling email","ai","Low-stakes and repetitive. Delegate it, then skim it before you send."]
+  ];
+  var LABELS = {you:"You keep it", ai:"Delegate to AI", both:"Collaborate"};
+  var sorter = $("#sorter");
+  SORT.forEach(function(s, i){
+    var row = el("div",{class:"sort-item"});
+    row.innerHTML = '<span>'+s[0]+'</span><div class="opts" role="group" aria-label="Who owns: '+s[0]+'"></div><p class="why"></p>';
+    var opts = $(".opts", row);
+    ["you","both","ai"].forEach(function(k){
+      var b = el("button",{type:"button",class:"opt","aria-pressed":"false","data-k":k}, LABELS[k]);
+      b.addEventListener("click", function(){ state.sort[i] = k; save(); paintSort(); });
+      opts.appendChild(b);
+    });
+    sorter.appendChild(row);
+  });
+  function paintSort(){
+    var right = 0, answered = 0;
+    $$(".sort-item", sorter).forEach(function(row, i){
+      var pick = state.sort[i], ans = SORT[i][1];
+      $$(".opt", row).forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.k === pick)); });
+      row.classList.toggle("answered", !!pick);
+      row.classList.toggle("right", pick === ans);
+      row.classList.toggle("wrong", !!pick && pick !== ans);
+      if (pick){ answered++; if (pick === ans) right++;
+        $(".why", row).innerHTML = '<span class="verdict '+(pick===ans?'right':'wrong')+'">'+(pick===ans?'Agreed. ':'Suggested: '+LABELS[ans]+'. ')+'</span>'+SORT[i][2];
+      }
+    });
+    $("#sortScore").textContent = answered ? (right + " of " + answered + " match the suggested answer. Disagreeing is fine if you can explain why. That is discernment at work.") : "";
+  }
+  paintSort();
+
+  /* ---------- prompts ---------- */
+  var PROMPTS = [
+    ["Quiz me on what I learned",
+"I just spent this session learning about [TOPIC]. Quiz me to check that I understand it.\n\n- Ask 5 questions, one at a time, and wait for my answer before continuing.\n- Mix recall questions with \"apply it to a new situation\" questions.\n- Don't give the answer until I have tried.\n- After each answer, tell me what I got right, what I missed, and one thing to review.\n- At the end, list the ideas I'm weakest on."],
+    ["Quiz me on something I created with you",
+"We just built [DOCUMENT / CODE / PLAN] together. Before I rely on it, test whether I really understand it.\n\nAsk me 5 questions, one at a time, about why it works the way it does, what would break if something changed, and what trade-offs we made. Wait for my answer each time. If I can't explain a part, flag it as something I need to learn or rewrite myself."],
+    ["Explain it back",
+"I'm going to explain [TOPIC] in my own words. Don't rewrite my explanation. Instead:\n1. Point out anything that is incorrect.\n2. Name the gaps: important ideas I left out.\n3. Ask me one follow-up question that would push my understanding further."],
+    ["Brief the employee",
+"You are my assistant for this task. I am making the decisions.\n\nGoal: [WHAT I WANT AND WHY]\nWhat I've already decided: [DECISIONS]\nYour task: [SPECIFIC, BOUNDED TASK]\nConstraints: [LENGTH, TONE, FORMAT]\n\nIf anything requires a judgment call, don't make it. Lay out the options and trade-offs, then ask me."],
+    ["Protect my creativity",
+"I'm going to share my own rough ideas for [PROJECT]. Please don't generate new ideas of your own yet.\n\nInstead, ask me 5 questions that help me develop MY ideas further: what's most alive in them, what's missing, what I'm avoiding. Only after I say \"now suggest\" may you offer additions."],
+    ["End-of-session recap",
+"We're ending this session. Please:\n1. Summarize in 5 bullet points what we did and what I decided.\n2. List 3 things I should now be able to do WITHOUT your help.\n3. Quiz me on those 3 things, one question at a time.\n4. Remind me to take a 10-minute screen-free break."]
+  ];
+  var pw = $("#prompts");
+  PROMPTS.forEach(function(p, i){
+    var d = el("div",{class:"prompt"});
+    d.innerHTML = '<div class="prompt__head"><h3>'+p[0]+'</h3><button class="btn btn--small btn--ghost" type="button">Copy prompt</button></div><pre id="prompt-'+i+'"></pre>';
+    $("pre", d).textContent = p[1];
+    $("button", d).addEventListener("click", function(){ copyText(p[1], $("pre", d)); });
+    pw.appendChild(d);
+  });
+  function copyText(text, node){
+    function fallback(){ try { var r = document.createRange(); r.selectNodeContents(node); var s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Text selected. Press Ctrl+C or Cmd+C to copy."); } catch(e) {} }
+    try { navigator.clipboard.writeText(text).then(function(){ toast("Copied"); }, fallback); } catch(e) { fallback(); }
+  }
+
+  /* ---------- quizzes ---------- */
+  var QUIZZES = {
+    m2: [
+      ["What does the 20-20-20 rule ask you to do?", ["Every 20 minutes, look at something 20 feet (6 m) away for 20 seconds","Take a 20-minute break every 20 hours","Keep your screen 20 cm from your eyes","Lower brightness by 20% every 20 minutes"], 0, "Distance lets the focusing muscle in your eye relax, and 20 seconds is enough for it to let go."],
+      ["What is the best-supported reason to limit blue light from screens?", ["It damages the retina","It can delay melatonin and sleep when used in the evening","It causes near-sightedness in adults","It makes screens harder to read"], 1, "Screen blue light is far weaker than daylight. Its main proven effect is on your body clock at night."],
+      ["Why is looking at something green and far away especially restful?", ["Green light is filtered out by the eye","It relaxes focus and nature helps restore attention","It improves your eyesight permanently","Green screens emit less light"], 1, "Far focus relaxes the eye. Natural scenes also support recovery of directed attention."]
+    ],
+    m3: [
+      ["What is the main physical problem with long screen sessions?", ["Using a laptop instead of a desktop","Staying in any single position for too long","Typing too fast","Sitting on a soft chair"], 1, "Your body likes variety. The best posture is your next one."],
+      ["How often is a good starting point for a micro-movement break?", ["Once a day","Every 30 to 60 minutes","Every 5 minutes","Only when something hurts"], 1, "Short, frequent breaks work better than one long session at the end of a sedentary day."],
+      ["Which is a good way to build movement into AI work?", ["Stand up while a long answer is generating","Eat lunch at the desk to save time","Use a larger monitor","Scroll your phone during breaks"], 0, "Waiting time is free movement time."]
+    ],
+    m4: [
+      ["Why can long AI sessions feel so draining?", ["The screen is brighter than usual","You are constantly evaluating output, with few natural pauses","AI tools use more electricity","Typing prompts is physically tiring"], 1, "Reviewing, choosing and switching all use effortful attention, and fast replies remove the small rests."],
+      ["Which of these is a sign you need a break?", ["You are accepting outputs without checking them","You finished a task","You feel curious","You made a decision"], 0, "When your judgment starts to slip, rest before you continue."],
+      ["What makes a real break for the mind?", ["Scrolling social media","Switching to a different chat","Going outside, moving or talking to someone, away from screens","Watching a short video"], 2, "A screen break has to be a break from screens."]
+    ],
+    m5: [
+      ["In the employee-and-manager model, who makes the final decision?", ["The AI, because it has more information","You","Whoever is faster","It depends on the AI model"], 1, "The AI can list options and trade-offs. The choice and responsibility stay with you."],
+      ["What is the best order for creative work?", ["Ask AI for ideas, then pick one","Generate your own ideas first, then use AI to stretch or test them","Let AI write it and edit the tone","Skip ideation and go straight to drafting"], 1, "Your first rough ideas carry your voice. Protect the spark and let AI refine."],
+      ["What does 'discernment' mean in this course?", ["Formatting documents correctly","Judging what is true, good, wise and right for your life","Writing faster prompts","Choosing the best AI tool"], 1, "Discernment is the capacity you must keep exercising yourself."]
+    ],
+    m6: [
+      ["What is the testing effect?", ["AI tests are more accurate than human tests","Recalling information from memory strengthens it more than re-reading","Testing makes people anxious","You should test AI outputs for bias"], 1, "Retrieval practice is one of the most reliable findings in learning science."],
+      ["When AI quizzes you, what should you do?", ["Look up the answer first so you get it right","Try to answer from memory before seeing the answer","Ask it to give the answers with the questions","Skip hard questions"], 1, "The effort of recalling, even when you get it wrong, is what builds memory."],
+      ["What is a good moment to ask AI to quiz you?", ["Only before an exam","At the end of an AI session and again the next day","Never, since it replaces learning","Only for coding"], 1, "End-of-session and next-day recall catch what you really kept."]
+    ],
+    m7: [
+      ["What is a simple way to use technology with intention?", ["Keep notifications on so you never miss anything","Pause and name why you're opening an app before you open it","Use AI for every decision","Always have a screen in reach"], 1, "A single breath and a named reason turn a reflex into a choice."],
+      ["Which task is best kept fully human?", ["Formatting a spreadsheet","Writing words of grief or love to someone close","Summarizing a report","Converting file types"], 1, "Those words matter because they come from you."],
+      ["Why protect the first and last hour of the day?", ["Screens don't work in the morning","They set your body clock, your mood and your inner tone for the day and night","Apps are slower at those times","It saves battery"], 1, "Morning light and a screen-free evening support sleep, calm and presence."]
+    ]
+  };
+  $$("[data-quiz]").forEach(function(q){
+    var id = q.dataset.quiz, qs = QUIZZES[id]; if (!qs) return;
+    var html = '<header><p class="eyebrow">Check your understanding</p><h3>Module quiz</h3></header>';
+    qs.forEach(function(item, qi){
+      html += '<fieldset><legend>'+(qi+1)+'. '+item[0]+'</legend>';
+      item[1].forEach(function(o, oi){ html += '<label class="qopt"><input type="radio" name="'+id+'-q'+qi+'" id="'+id+'-q'+qi+'-'+oi+'" value="'+oi+'"><span>'+o+'</span></label>'; });
+      html += '<p class="qexp">'+item[3]+'</p></fieldset>';
+    });
+    html += '<div class="quiz__foot"><button class="btn" type="button">Check answers</button><span class="score" aria-live="polite"></span></div>';
+    q.innerHTML = html;
+    var prev = state.quiz[id];
+    if (prev && prev.answers) prev.answers.forEach(function(a, qi){ if (a != null){ var r = $("#"+id+"-q"+qi+"-"+a); if (r) r.checked = true; } });
+    function grade(silent){
+      var answers = [], right = 0;
+      qs.forEach(function(item, qi){
+        var sel = $('input[name="'+id+'-q'+qi+'"]:checked', q); var v = sel ? +sel.value : null; answers.push(v);
+        $$('input[name="'+id+'-q'+qi+'"]', q).forEach(function(inp){
+          var lab = inp.closest(".qopt"); lab.classList.remove("is-right","is-wrong");
+          if (+inp.value === item[2]) lab.classList.add("is-right");
+          else if (inp.checked) lab.classList.add("is-wrong");
+        });
+        if (v === item[2]) right++;
+      });
+      q.classList.add("checked");
+      $(".score", q).textContent = right + " / " + qs.length + (right === qs.length ? " · all correct" : " · read the notes under each question");
+      state.quiz[id] = {answers:answers, right:right}; save();
+      if (!silent && right === qs.length) toast("Nice work. Take a 20-second look out of the window?");
+    }
+    $(".quiz__foot .btn", q).addEventListener("click", function(){ grade(false); });
+    if (prev && prev.answers && prev.answers.some(function(a){ return a != null; })) grade(true);
+  });
+
+  /* ---------- reflection ---------- */
+  var ref = $("#reflect"); ref.value = state.reflect || "";
+  ref.addEventListener("input", function(){ state.reflect = ref.value; save(); });
+
+  /* ---------- plan builder ---------- */
+  var HABITS = [
+    ["Eyes and light", [
+      ["h20","Every 20 min: look 6 m (20 ft) away for 20 seconds, blinking slowly"],
+      ["hgreen","Every 1-2 hours: a 5-10 minute green break at a window or outside"],
+      ["hnight","Night mode on from sunset; screens dimmed after dark"],
+      ["hbed","No screens in the last hour before bed; phone charges outside the bedroom"],
+      ["hmorn","10-20 minutes of outdoor daylight soon after waking"],
+      ["hsetup","Screen at arm's length, top at eye level, text size up"]
+    ]],
+    ["Body", [
+      ["hmove","Every 30-60 min: a 2-minute micro-movement break"],
+      ["hstand","Stand or stretch while AI generates long answers"],
+      ["hwalk","Take calls standing or walking"]
+    ]],
+    ["Mind", [
+      ["hpen","Start each task with 5 minutes of pen and paper before opening AI"],
+      ["hbox","Work in 25-50 minute blocks with a clear goal for each"],
+      ["h90","Every 90 minutes: a 10-20 minute break away from all screens"],
+      ["hquiz","End each AI session by asking it to quiz me"],
+      ["hlimit","A set end time for intensive AI work each day"]
+    ]],
+    ["Thinking and judgment", [
+      ["hideas","Write my own ideas before asking AI for any"],
+      ["hdecide","AI gives options; I make the decisions"],
+      ["hreview","Review every AI output before using it"],
+      ["hbrief","Brief AI like an employee: goal, decisions made, bounded task"]
+    ]],
+    ["Spirit", [
+      ["hintent","One breath and a named reason before opening an app"],
+      ["hedges","First 30-60 minutes of the day screen-free"],
+      ["hhuman","Write personal and emotional messages myself"],
+      ["hsabbath","A weekly unplugged block of a few hours or a day"],
+      ["hhands","Make something by hand each week"]
+    ]]
+  ];
+  if (!Object.keys(state.habits).length){ state.habits = {h20:true, hmove:true, hpen:true, hquiz:true, hbed:true}; }
+  var hw = $("#habits");
+  HABITS.forEach(function(g){
+    hw.appendChild(el("h4", null, g[0]));
+    g[1].forEach(function(h){
+      var lab = el("label", {"for":"hb-"+h[0]}, '<input type="checkbox" id="hb-'+h[0]+'"'+(state.habits[h[0]]?' checked':'')+'><span>'+h[1]+'</span>');
+      $("input", lab).addEventListener("change", function(e){ state.habits[h[0]] = e.target.checked; save(); renderPlan(); });
+      hw.appendChild(lab);
+    });
+  });
+  function planText(){
+    var out = "MY HEALTHY TECH PLAN\nStarted: " + new Date().toLocaleDateString() + "\n\n";
+    var any = false;
+    HABITS.forEach(function(g){
+      var picks = g[1].filter(function(h){ return state.habits[h[0]]; });
+      if (picks.length){ any = true; out += g[0].toUpperCase() + "\n"; picks.forEach(function(h){ out += "  [ ] " + h[1] + "\n"; }); out += "\n"; }
+    });
+    if (!any) out += "(Pick a few habits above to build your plan.)\n\n";
+    out += "MY RULE: AI is my employee, not my manager.\n\n";
+    out += "BASELINE (1-5): ";
+    out += SLIDERS.map(function(s){ return s[1] + " " + (state.sliders[s[0]] || 3); }).join(" · ");
+    out += "\nRe-check in two weeks.";
+    return out;
+  }
+  function renderPlan(){ $("#planOut").textContent = planText(); }
+  $("#copyPlan").addEventListener("click", function(){ copyText(planText(), $("#planOut")); });
+  renderPlan();
+
+  /* ---------- break coach ---------- */
+  var running = false, nextEye = 0, nextMove = 0, audioCtx = null, inBreak = false;
+  var eyeSel = $("#eyeInt"), moveSel = $("#moveInt"), chimeSel = $("#chime");
+  eyeSel.value = String(state.eyeInt); moveSel.value = String(state.moveInt); chimeSel.value = state.chime;
+  function fmt(ms){ ms = Math.max(0, ms); var s = Math.round(ms/1000), m = Math.floor(s/60); s = s % 60; return (m<10?"0":"")+m+":"+(s<10?"0":"")+s; }
+  function resetTimers(){ var now = Date.now(); nextEye = now + state.eyeInt*60000; nextMove = now + state.moveInt*60000; }
+  function paintCoach(){
+    var now = Date.now();
+    $("#eyeLeft").textContent = running ? fmt(nextEye - now) : fmt(state.eyeInt*60000);
+    $("#moveLeft").textContent = running ? fmt(nextMove - now) : fmt(state.moveInt*60000);
+    var label = running ? "Pause break coach" : "Start break coach";
+    $("#coachToggle").textContent = label; $("#coachToggle2").textContent = label;
+  }
+  function toggleCoach(){
+    running = !running;
+    if (running){ ensureAudio(); resetTimers(); toast("Break coach on. Keep this tab open."); }
+    paintCoach();
+  }
+  $("#coachToggle").addEventListener("click", toggleCoach);
+  $("#coachToggle2").addEventListener("click", toggleCoach);
+  eyeSel.addEventListener("change", function(){ state.eyeInt = +eyeSel.value; save(); if (running) nextEye = Date.now() + state.eyeInt*60000; paintCoach(); });
+  moveSel.addEventListener("change", function(){ state.moveInt = +moveSel.value; save(); if (running) nextMove = Date.now() + state.moveInt*60000; paintCoach(); });
+  chimeSel.addEventListener("change", function(){ state.chime = chimeSel.value; save(); });
+
+  function ensureAudio(){ try { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === "suspended") audioCtx.resume(); } catch(e) {} }
+  function chime(){
+    if (state.chime !== "on" || !audioCtx) return;
+    try {
+      [523.25, 659.25, 783.99].forEach(function(f, i){
+        var o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = audioCtx.currentTime + i*0.18;
+        o.type = "sine"; o.frequency.value = f; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.12, t+0.03); g.gain.exponentialRampToValueAtTime(0.0001, t+1.2);
+        o.connect(g); g.connect(audioCtx.destination); o.start(t); o.stop(t+1.3);
+      });
+    } catch(e) {}
+  }
+
+  var C = 2*Math.PI*52, arc = $("#bArc"); arc.style.strokeDasharray = C;
+  var bTimer = null, bEnd = 0, bTotal = 0, bSteps = null, bKind = "";
+  function openBreak(kind){
+    inBreak = true; bKind = kind; ensureAudio(); chime();
+    var ov = $("#overlay"); ov.hidden = false;
+    if (kind === "eye"){
+      $("#bKind").textContent = "Eye break · 20 seconds";
+      $("#bTitle").textContent = "Look far away";
+      $("#bStep").textContent = "Find something green, 6 m or farther";
+      $("#bHint").textContent = "A tree, a hill, the sky. Keep your gaze soft and blink slowly a few times.";
+      bSteps = null; $("#bSteps").innerHTML = ""; bTotal = 20;
+      arc.style.stroke = "var(--sky)";
+    } else {
+      $("#bKind").textContent = "Movement break · 2 minutes";
+      $("#bTitle").textContent = "Move gently";
+      bSteps = ROUTINE; bTotal = ROUTINE.length * 20;
+      $("#bSteps").innerHTML = ROUTINE.map(function(r){ return "<span>"+r[0]+"</span>"; }).join("");
+      arc.style.stroke = "var(--amber)";
+    }
+    bEnd = Date.now() + bTotal*1000;
+    tickBreak(); clearInterval(bTimer); bTimer = setInterval(tickBreak, 250);
+    setTimeout(function(){ $("#bDone").focus(); }, 50);
+  }
+  var lastStep = -1;
+  function tickBreak(){
+    var left = Math.max(0, (bEnd - Date.now())/1000);
+    $("#bTime").textContent = Math.ceil(left);
+    arc.style.strokeDashoffset = C * (1 - left / bTotal);
+    if (bSteps){
+      var idx = Math.min(bSteps.length-1, Math.floor((bTotal - left)/20));
+      if (idx !== lastStep){
+        lastStep = idx;
+        $("#bStep").textContent = bSteps[idx][0];
+        $("#bHint").textContent = bSteps[idx][1];
+        $$("#bSteps span").forEach(function(s, i){ s.classList.toggle("on", i === idx); });
+        if (idx > 0) chime();
+      }
+      $("#bTime").textContent = Math.ceil(left - (bSteps.length-1-idx)*20);
+    }
+    if (left <= 0){
+      clearInterval(bTimer); bTimer = null; chime();
+      $("#bStep").textContent = "Well done";
+      $("#bHint").textContent = bKind === "eye" ? "Your eyes had a real rest. Back to it." : "Notice how your body feels now. Take a sip of water.";
+      $("#bTime").textContent = "0";
+    }
+  }
+  function closeBreak(snooze){
+    clearInterval(bTimer); bTimer = null; lastStep = -1; inBreak = false;
+    $("#overlay").hidden = true;
+    if (running){
+      var now = Date.now();
+      if (bKind === "eye") nextEye = now + (snooze ? 5 : state.eyeInt)*60000;
+      else { nextMove = now + (snooze ? 5 : state.moveInt)*60000; if (!snooze) nextEye = Math.max(nextEye, now + state.eyeInt*60000); }
+    }
+    paintCoach();
+  }
+  $("#bDone").addEventListener("click", function(){ closeBreak(false); });
+  $("#bSnooze").addEventListener("click", function(){ closeBreak(true); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !$("#overlay").hidden) closeBreak(false); });
+  $$("[data-try]").forEach(function(b){ b.addEventListener("click", function(){ openBreak(b.dataset.try); }); });
+
+  setInterval(function(){
+    if (running && !inBreak){
+      var now = Date.now();
+      if (now >= nextMove) openBreak("move");
+      else if (now >= nextEye) openBreak("eye");
+    }
+    paintCoach();
+  }, 1000);
+  paintCoach();
+})();
+</script>
+</body>
+</html>

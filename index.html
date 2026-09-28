@@ -48,15 +48,10 @@
           <li data-i18n="hero.f3">משלוח למשרד או לבית העובד</li>
         </ul>
       </div>
-      <div class="hero__visual" aria-hidden="true">
-        <div class="stack">
-          <div class="fold fold--1"></div>
-          <div class="fold fold--2"></div>
-          <div class="fold fold--3"></div>
-          <div class="ribbon"></div>
-          <div class="tag"><span data-i18n="hero.tag">לילה טוב,<br>ותודה.</span></div>
-        </div>
-      </div>
+      <figure class="hero__visual">
+        <img src="assets/photos/bedroom.webp" width="1200" height="1600" alt="" data-i18n-alt="img.hero">
+        <div class="tag" aria-hidden="true"><span data-i18n="hero.tag">לילה טוב,<br>ותודה.</span></div>
+      </figure>
     </div>
   </section>
 
@@ -106,7 +101,7 @@
 
       <div class="packages">
         <article class="pkg">
-          <div class="pkg__visual pkg__visual--1" aria-hidden="true"><span></span><span></span></div>
+          <img class="pkg__img" src="assets/photos/single-set.webp" width="434" height="385" loading="lazy" alt="" data-i18n-alt="img.pk1">
           <div class="pkg__body">
             <p class="pkg__label" data-i18n="pk1.label">מארז basic</p>
             <h3 data-i18n="pk1.name">לילה טוב</h3>
@@ -122,7 +117,7 @@
 
         <article class="pkg pkg--featured">
           <p class="pkg__badge" data-i18n="pk2.badge">הנבחר ביותר</p>
-          <div class="pkg__visual pkg__visual--2" aria-hidden="true"><span></span><span></span><span></span></div>
+          <img class="pkg__img" src="assets/photos/double-set.webp" width="434" height="385" loading="lazy" alt="" data-i18n-alt="img.pk2">
           <div class="pkg__body">
             <p class="pkg__label" data-i18n="pk2.label">מארז מלא</p>
             <h3 data-i18n="pk2.name">שינה עמוקה</h3>
@@ -138,7 +133,7 @@
         </article>
 
         <article class="pkg">
-          <div class="pkg__visual pkg__visual--3" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <img class="pkg__img" src="assets/photos/cloud-hug-wide.webp" width="625" height="286" loading="lazy" alt="" data-i18n-alt="img.pk3">
           <div class="pkg__body">
             <p class="pkg__label" data-i18n="pk3.label">מארז פרימיום</p>
             <h3 data-i18n="pk3.name">מנוחה מלאה</h3>
@@ -146,7 +141,7 @@
             <ul class="pkg__list">
               <li data-i18n="pk3.i1">סט מצעים מלא</li>
               <li data-i18n="pk3.i2">שמיכת ענן</li>
-              <li data-i18n="pk3.i3">בחירה מתוך 5 צבעי המותג</li>
+              <li data-i18n="pk3.i3">בחירת צבע לכל עובד</li>
               <li data-i18n="pk3.i4">קופסת מתנה + כרטיס אישי</li>
             </ul>
             <p class="pkg__for" data-i18n="pk3.for">מתאים ל: הנהלה, ותק, הוקרה מיוחדת</p>
@@ -174,34 +169,37 @@
       </div>
       <div class="products">
         <article class="product">
-          <div class="product__img product__img--sheet" aria-hidden="true"></div>
+          <img class="product__img" src="assets/photos/duvet-texture.webp" loading="lazy" alt="" data-i18n-alt="img.p1">
           <h3 data-i18n="col.p1t">סדינים</h3>
           <p data-i18n="col.p1p">סדין basic עם גומי, מתאים לאורך 200 ס״מ ולגובה מזרן עד 30 ס״מ.</p>
         </article>
         <article class="product">
-          <div class="product__img product__img--duvet" aria-hidden="true"></div>
+          <img class="product__img" src="assets/photos/bed-pillows.webp" loading="lazy" alt="" data-i18n-alt="img.p2">
           <h3 data-i18n="col.p2t">ציפות לשמיכה</h3>
           <p data-i18n="col.p2p">ציפות לשמיכה ביחיד, זוגי וקינג – נקיות, חלקות ובגוונים שקטים.</p>
         </article>
         <article class="product">
-          <div class="product__img product__img--pillow" aria-hidden="true"></div>
+          <img class="product__img" src="assets/photos/pillows-thumb.webp" loading="lazy" alt="" data-i18n-alt="img.p3">
           <h3 data-i18n="col.p3t">ציפיות</h3>
           <p data-i18n="col.p3p">ציפיות תואמות לכל סט, בגימור איכותי במיוחד.</p>
         </article>
         <article class="product">
-          <div class="product__img product__img--blanket" aria-hidden="true"></div>
+          <img class="product__img" src="assets/photos/cloud-thumb.webp" loading="lazy" alt="" data-i18n-alt="img.p4">
           <h3 data-i18n="col.p4t">שמיכות ענן</h3>
           <p data-i18n="col.p4p">מעטפת כותנה אורגנית ומילוי אוורירי שיוצר תחושת ענן. יחיד וזוגי (200/220), לכל העונות.</p>
         </article>
       </div>
       <div class="swatches">
-        <p data-i18n="col.colors">5 צבעי המותג:</p>
+        <p data-i18n="col.colors">גוונים:</p>
         <ul>
-          <li><span style="--c:#f6f2ea"></span><em data-i18n="col.c1">לבן</em></li>
-          <li><span style="--c:#d9bfb7"></span><em data-i18n="col.c2">ורוד מעושן</em></li>
-          <li><span style="--c:#c9c3b6"></span><em data-i18n="col.c3">אבן</em></li>
-          <li><span style="--c:#b5bfae"></span><em data-i18n="col.c4">מרווה</em></li>
-          <li><span style="--c:#8a8f96"></span><em data-i18n="col.c5">פחם רך</em></li>
+          <li><span style="--c:#f7f6f2"></span><em data-i18n="col.c1">לבן</em></li>
+          <li><span style="--c:#d2cfb7"></span><em data-i18n="col.c2">שמנת</em></li>
+          <li><span style="--c:#c6c7cd"></span><em data-i18n="col.c3">אפור בהיר</em></li>
+          <li><span style="--c:#79827f"></span><em data-i18n="col.c4">ירוק אפרפר</em></li>
+          <li><span style="--c:#3f4046"></span><em data-i18n="col.c5">פחם</em></li>
+          <li><span style="--c:#c6aa74"></span><em data-i18n="col.c6">חרדל</em></li>
+          <li><span style="--c:#c292a2"></span><em data-i18n="col.c7">ורוד מעושן</em></li>
+          <li><span style="--c:#6f4551"></span><em data-i18n="col.c8">שזיף</em></li>
         </ul>
       </div>
     </div>

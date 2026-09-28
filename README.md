@@ -12,6 +12,6 @@ Static site, no build step: open `index.html` or deploy the folder to any static
 
 - **Contact details:** replace `business@basic-studio.com` (in `index.html` and `QUOTE_EMAIL` in `script.js`) and the WhatsApp number `972500000000`.
 - **Quote form:** currently opens a pre-filled email. Connect it to a form service or CRM (e.g. Formspree, HubSpot, Wix Forms) to capture leads directly.
-- **Photos:** product and hero visuals are CSS placeholders. Swap in real product photography.
-- **Colours:** only White and Smoky Pink are confirmed from the retail site; check the other three brand colour names and hex values.
+- **Photos:** `assets/photos/` holds images cropped from screenshots of basic-studio.com. They work, but the pillow and cloud-blanket product cards use small (188px) thumbnails. Swap in the original high-resolution files when available (same file names).
+- **Colours:** the 8 swatches were sampled from the retail site's colour dots. Only White and Smoky Pink have confirmed names; check the others (Cream, Light grey, Grey-green, Charcoal, Mustard, Plum).
 - **Business terms:** minimum order (10 / 20), delivery times (5–10 business days), 30-day exchange and next-day quote are suggested defaults. Adjust them to match your actual operations.

@@ -54,7 +54,7 @@ const EN = {
   "pk3.desc": "The full bedding set together with the basic cloud blanket: soft, airy and right for every season.",
   "pk3.i1": "Full bedding set",
   "pk3.i2": "Cloud blanket",
-  "pk3.i3": "Choice of 5 brand colours",
+  "pk3.i3": "A colour choice for each employee",
   "pk3.i4": "Gift box + personal card",
   "pk3.for": "Great for: leadership, work anniversaries, special recognition",
   "custom.title": "Need something different?",
@@ -72,12 +72,24 @@ const EN = {
   "col.p3p": "Matching pillowcases for every set, with an exceptionally fine finish.",
   "col.p4t": "Cloud blankets",
   "col.p4p": "An organic cotton shell with an airy fill that feels like a cloud. Single and double (200/220), for every season.",
-  "col.colors": "5 brand colours:",
+  "col.colors": "Colours:",
   "col.c1": "White",
-  "col.c2": "Smoky pink",
-  "col.c3": "Stone",
-  "col.c4": "Sage",
-  "col.c5": "Soft charcoal",
+  "col.c2": "Cream",
+  "col.c3": "Light grey",
+  "col.c4": "Grey-green",
+  "col.c5": "Charcoal",
+  "col.c6": "Mustard",
+  "col.c7": "Smoky pink",
+  "col.c8": "Plum",
+
+  "img.hero": "A bed made with white basic organic cotton bedding by a sunlit window",
+  "img.pk1": "Single basic set: duvet cover and pillowcase, seen from above",
+  "img.pk2": "Double basic set: duvet cover and two pillowcases, seen from above",
+  "img.pk3": "A woman hugging a white basic cloud blanket",
+  "img.p1": "Close-up of soft, crinkled organic cotton",
+  "img.p2": "White duvet cover and pillowcases on a made bed",
+  "img.p3": "Two white pillows",
+  "img.p4": "A woman carrying a cloud blanket",
 
   "org.eyebrow": "Why organic cotton",
   "org.title": "Good for the body, for sleep, and for the planet.",
@@ -158,7 +170,19 @@ const META = {
 
 const QUOTE_EMAIL = "business@basic-studio.com";
 
+const HE_ALT = {
+  "img.hero": "מיטה מוצעת במצעי basic לבנים מכותנה אורגנית ליד חלון מואר",
+  "img.pk1": "סט basic יחיד: ציפה לשמיכה וציפית, מבט מלמעלה",
+  "img.pk2": "סט basic זוגי: ציפה לשמיכה ושתי ציפיות, מבט מלמעלה",
+  "img.pk3": "אישה מחבקת שמיכת ענן לבנה של basic",
+  "img.p1": "תקריב של כותנה אורגנית רכה",
+  "img.p2": "ציפה וציפיות לבנות על מיטה מוצעת",
+  "img.p3": "שתי כריות לבנות",
+  "img.p4": "אישה נושאת שמיכת ענן"
+};
+
 const nodes = document.querySelectorAll("[data-i18n]");
+const altNodes = document.querySelectorAll("[data-i18n-alt]");
 const HE = {};
 nodes.forEach(el => { HE[el.dataset.i18n] = el.innerHTML; });
 
@@ -170,6 +194,9 @@ function setLang(next) {
   nodes.forEach(el => {
     const val = dict[el.dataset.i18n];
     if (val !== undefined) el.innerHTML = val;
+  });
+  altNodes.forEach(el => {
+    el.alt = (next === "en" ? EN : HE_ALT)[el.dataset.i18nAlt] || "";
   });
   document.documentElement.lang = next;
   document.documentElement.dir = next === "en" ? "ltr" : "rtl";
@@ -188,7 +215,7 @@ document.getElementById("langToggle").addEventListener("click", () => {
 
 let initial = new URLSearchParams(location.search).get("lang");
 if (!initial) { try { initial = localStorage.getItem("lang"); } catch (e) {} }
-if (initial === "en") setLang("en");
+setLang(initial === "en" ? "en" : "he");
 
 // Quote form: no backend yet, so it composes an email to the business inbox.
 document.getElementById("quoteForm").addEventListener("submit", e => {

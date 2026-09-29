@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>basic for business</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&family=Varela+Round&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f7f4ee;
+  --linen: #efe9df;
+  --sand: #e3dacb;
+  --stone: #b9b1a3;
+  --ink: #2e2b27;
+  --muted: #6d665c;
+  --sage: #8e9a86;
+  --blush: #d9bfb7;
+  --line: rgba(46, 43, 39, .12);
+  --radius: 10px;
+  --serif: "Varela Round", "Rubik", "Arial Rounded MT Bold", Arial, sans-serif;
+  --sans: "Rubik", "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.65;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.2; margin: 0 0 .5em; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: clamp(1.75rem, 3.3vw, 2.5rem); font-weight: 400; text-wrap: balance; }
+h3 { font-size: 1.35rem; }
+p { margin: 0 0 1em; }
+
+.wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+.wrap--narrow { width: min(760px, 100% - 32px); }
+
+.eyebrow {
+  font-size: .8rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2em;
+}
+.lead, .section__lead { font-size: 1.15rem; color: var(--muted); max-width: 38em; }
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  padding: .85em 1.8em;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  font: 500 .95rem var(--sans);
+  letter-spacing: .03em;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.btn:hover { background: transparent; color: var(--ink); }
+.btn--ghost { background: transparent; color: var(--ink); }
+.btn--ghost:hover { background: var(--ink); color: var(--paper); }
+.btn--small { padding: .55em 1.2em; font-size: .88rem; }
+.btn--full { width: 100%; }
+
+/* Nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: rgba(247, 244, 238, .92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; }
+.logo {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  text-decoration: none;
+  letter-spacing: .02em;
+  display: inline-flex; align-items: baseline; gap: 8px;
+  direction: ltr;
+}
+.logo__sub { font-family: var(--sans); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.nav__links { display: flex; gap: 28px; }
+.nav__links a { text-decoration: none; font-size: .95rem; color: var(--muted); }
+.nav__links a:hover { color: var(--ink); }
+.nav__actions { display: flex; align-items: center; gap: 12px; }
+.lang {
+  background: none; border: 1px solid var(--line); border-radius: var(--radius);
+  font: 500 .8rem var(--sans); letter-spacing: .1em;
+  padding: .5em .8em; cursor: pointer; color: var(--ink);
+}
+.lang:hover { border-color: var(--ink); }
+
+/* Hero */
+.hero { padding: clamp(48px, 8vw, 110px) 0 clamp(56px, 8vw, 100px); }
+.hero__inner { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 36px; }
+.hero__facts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: .92rem; color: var(--muted); }
+.hero__facts li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); margin-inline-end: 10px; vertical-align: middle; }
+
+.hero__visual { position: relative; margin: 0; }
+.hero__visual img {
+  width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 40%;
+  border-radius: var(--radius);
+}
+.tag {
+  position: absolute; bottom: 8%; inset-inline-start: -24px;
+  width: 128px; padding: 14px 12px;
+  background: #fff; border: 1px solid var(--line);
+  font-family: var(--serif); font-size: .95rem; text-align: center; line-height: 1.3;
+  transform: rotate(-6deg);
+  box-shadow: 0 10px 20px -12px rgba(0,0,0,.3);
+}
+
+/* Sections */
+.section { padding: clamp(64px, 9vw, 120px) 0; }
+.section--tint { background: var(--linen); }
+.section__head { margin-bottom: 56px; max-width: 760px; }
+
+.cards { display: grid; gap: 24px; }
+.cards--3 { grid-template-columns: repeat(3, 1fr); }
+.card { padding: 32px 28px; border-top: 1px solid var(--ink); }
+.card__num { font-family: var(--serif); font-size: .95rem; color: var(--stone); display: block; margin-bottom: 18px; }
+.card p { color: var(--muted); }
+
+.band { background: var(--ink); color: var(--paper); padding: clamp(56px, 7vw, 88px) 0; }
+.band__quote { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 3vw, 2.3rem); text-align: center; max-width: 900px; margin: 0 auto; line-height: 1.4; }
+
+/* Packages */
+.packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+.pkg { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; overflow: hidden; }
+.pkg--featured { border-color: var(--ink); }
+.pkg__badge {
+  position: absolute; top: 14px; inset-inline-end: 14px; z-index: 1;
+  background: var(--ink); color: var(--paper);
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: .35em .9em; border-radius: 999px; margin: 0;
+}
+.pkg__img { width: 100%; height: 220px; object-fit: cover; object-position: center top; background: var(--linen); }
+.pkg__body { padding: 28px 28px 32px; display: flex; flex-direction: column; flex: 1; }
+.pkg__label { font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .4em; }
+.pkg__body > p:not(.pkg__label):not(.pkg__for) { color: var(--muted); }
+.pkg__list { list-style: none; padding: 0; margin: 0 0 24px; border-top: 1px solid var(--line); }
+.pkg__list li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+.pkg__for { margin-top: auto; font-size: .85rem; color: var(--muted); margin-bottom: 0; }
+
+.custom {
+  margin-top: 32px; padding: 32px 36px;
+  border: 1px dashed var(--stone); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.custom h3 { margin-bottom: .2em; }
+.custom p { margin: 0; color: var(--muted); }
+
+/* Collection */
+.products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.product__img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); margin-bottom: 18px; background: var(--sand); }
+.product p { color: var(--muted); font-size: .95rem; }
+
+.swatches { margin-top: 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
+.swatches p { margin: 0; font-size: .9rem; color: var(--muted); }
+.swatches ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.swatches li { display: flex; align-items: center; gap: 8px; font-size: .9rem; }
+.swatches span { width: 22px; height: 22px; border-radius: 50%; background: var(--c); border: 1px solid var(--line); }
+.swatches em { font-style: normal; }
+
+/* Split */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.split__visual { aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; }
+.weave {
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(0deg, rgba(46,43,39,.05) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(90deg, rgba(46,43,39,.05) 0 2px, transparent 2px 6px),
+    radial-gradient(circle at 30% 30%, #fbf9f5, var(--sand));
+}
+.ticks { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 22px; }
+.ticks li { display: grid; gap: 2px; padding-inline-start: 28px; position: relative; }
+.ticks li::before { content: ""; position: absolute; inset-inline-start: 0; top: .6em; width: 14px; height: 1px; background: var(--ink); }
+.ticks strong { font-family: var(--serif); font-weight: 400; font-size: 1.15rem; }
+.ticks span { color: var(--muted); }
+
+/* Steps */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 1px solid var(--ink); padding-top: 22px; }
+.steps li::before { content: "0" counter(s); font-family: var(--serif); color: var(--stone); display: block; margin-bottom: 14px; }
+.steps p { color: var(--muted); font-size: .95rem; }
+
+/* Occasions */
+.chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.chips li { border: 1px solid var(--line); background: #fff; padding: .6em 1.3em; border-radius: 999px; font-size: .95rem; }
+
+/* FAQ */
+details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+details:first-of-type { border-top: 1px solid var(--line); }
+summary { cursor: pointer; list-style: none; font-family: var(--serif); font-size: 1.2rem; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--sans); color: var(--muted); transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { color: var(--muted); margin: 14px 0 0; }
+
+/* Quote */
+.quote { background: var(--sand); }
+.split--form { align-items: start; }
+.contact { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 8px; }
+.contact a { text-decoration: none; border-bottom: 1px solid var(--stone); }
+.form { background: var(--paper); padding: 36px; border-radius: var(--radius); display: grid; gap: 18px; }
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form label { display: grid; gap: 6px; font-size: .85rem; color: var(--muted); }
+.form input, .form select, .form textarea {
+  font: inherit; font-size: 1rem; color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: .7em .85em; width: 100%;
+}
+.form input:focus, .form select:focus, .form textarea:focus { outline: 2px solid var(--sage); outline-offset: 1px; }
+.form .is-invalid { border-color: #b4574b; }
+.form__note { margin: 0; font-size: .92rem; min-height: 1.4em; }
+
+/* Footer */
+.footer { padding: 56px 0; border-top: 1px solid var(--line); }
+.footer__inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; align-items: flex-start; }
+.footer p { color: var(--muted); font-size: .92rem; margin: 8px 0 0; }
+.footer__links { display: flex; flex-wrap: wrap; gap: 20px; }
+.footer__links a { text-decoration: none; color: var(--muted); font-size: .95rem; }
+.footer__copy { width: 100%; }
+
+/* Hebrew doesn't take wide tracking well */
+html[lang="he"] .eyebrow, html[lang="he"] .pkg__label, html[lang="he"] .pkg__badge { letter-spacing: .04em; }
+
+/* English (LTR) tweaks */
+html[lang="en"] h1 { letter-spacing: -.015em; }
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .nav__links { display: none; }
+  .hero__inner, .split { grid-template-columns: 1fr; gap: 40px; }
+  .hero__visual { max-width: 460px; width: 100%; margin-inline: auto; }
+  .cards--3, .packages { grid-template-columns: 1fr; }
+  .products { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .split__visual { display: none; }
+}
+@media (max-width: 600px) {
+  .tag { inset-inline-start: 12px; }
+  body { font-size: 17px; }
+  .products, .steps, .form__row { grid-template-columns: 1fr; }
+  .custom { flex-direction: column; align-items: flex-start; padding: 24px; }
+  .form { padding: 24px; }
+  .logo__sub { display: none; }
+}
+
+
+.demo-bar { background: var(--sage); color: #fff; text-align: center; font-size: .85rem; padding: 8px 16px; line-height: 1.4; }
+
+</style>
+</head>
+<body>
+
+<script>document.documentElement.lang="he";document.documentElement.dir="rtl";</script>
+
+
+<div class="demo-bar" role="note" data-i18n="demo.bar">אתר הדגמה – קונספט שהוכן עבור basic. זה אינו האתר הרשמי של החברה.</div>
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a href="#top" class="logo">basic<span class="logo__sub">for business</span></a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#why" data-i18n="nav.why">למה שינה</a>
+      <a href="#packages" data-i18n="nav.packages">מארזים</a>
+      <a href="#collection" data-i18n="nav.collection">המוצרים</a>
+      <a href="#how" data-i18n="nav.how">איך זה עובד</a>
+      <a href="#faq" data-i18n="nav.faq">שאלות</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="lang" id="langToggle" type="button" aria-label="Switch language">EN</button>
+      <a href="#quote" class="btn btn--small" data-i18n="nav.cta">הצעת מחיר</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div class="hero__text">
+        <p class="eyebrow" data-i18n="hero.eyebrow">basic for business · מתנות לעובדים</p>
+        <h1 data-i18n="hero.title">עובדים טובים<br>מתחילים בלילה טוב.</h1>
+        <p class="lead" data-i18n="hero.lead">מארזי מצעים ושמיכות מכותנה אורגנית איכותית – מתנה שאנשים משתמשים בה כל לילה, ומזכירה להם כל בוקר שהמקום שבו הם עובדים דואג להם.</p>
+        <div class="hero__ctas">
+          <a href="#packages" class="btn" data-i18n="hero.cta1">לצפייה במארזים</a>
+          <a href="#quote" class="btn btn--ghost" data-i18n="hero.cta2">לקבלת הצעת מחיר</a>
+        </div>
+        <ul class="hero__facts">
+          <li data-i18n="hero.f1">100% כותנה אורגנית סרוקה</li>
+          <li data-i18n="hero.f2">מיתוג וכרטיס אישי</li>
+          <li data-i18n="hero.f3">משלוח למשרד או לבית העובד</li>
+        </ul>
+      </div>
+      <figure class="hero__visual">
+        <img src="photos/bedroom.webp" width="1200" height="1600" alt="" data-i18n-alt="img.hero">
+        <div class="tag" aria-hidden="true"><span data-i18n="hero.tag">לילה טוב,<br>ותודה.</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- WHY SLEEP -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="why.eyebrow">למה דווקא שינה</p>
+        <h2 data-i18n="why.title">רווחה אמיתית לא נגמרת בשעה חמש.</h2>
+        <p class="section__lead" data-i18n="why.lead">אנחנו משקיעים בכיסא הנכון, במסך הנכון ובארוחת הצהריים. אבל שליש מהחיים עובר במיטה – ושם נקבע איך העובדים שלכם יגיעו מחר בבוקר.</p>
+      </div>
+      <div class="cards cards--3">
+        <article class="card">
+          <span class="card__num">01</span>
+          <h3 data-i18n="why.c1t">חוזרים לעבודה רעננים</h3>
+          <p data-i18n="why.c1p">שינה טובה משפיעה ישירות על ריכוז, מצב רוח, יצירתיות וקבלת החלטות. עובד שישן טוב פשוט עובד טוב יותר – ונהנה מזה יותר.</p>
+        </article>
+        <article class="card">
+          <span class="card__num">02</span>
+          <h3 data-i18n="why.c2t">מתנה שנשארת בשימוש</h3>
+          <p data-i18n="why.c2p">לא עוד בקבוק או מחברת שנשכחים במגירה. מצעים איכותיים מלווים את העובד כל לילה, במשך שנים – עם תזכורת שקטה למי שנתן אותם.</p>
+        </article>
+        <article class="card">
+          <span class="card__num">03</span>
+          <h3 data-i18n="why.c3t">אמירה על התרבות שלכם</h3>
+          <p data-i18n="why.c3p">מתנה שאומרת "המנוחה שלך חשובה לנו" מחזקת שייכות ונאמנות, ומראה שהרווחה של העובדים היא ערך – לא רק סעיף בתקציב.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE BAND -->
+  <section class="band">
+    <div class="wrap band__inner">
+      <p class="band__quote" data-i18n="band.quote">"הכי קל לדבר על wellbeing. הכי מדויק – לתת לאנשים לישון טוב."</p>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="section" id="packages">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="pk.eyebrow">מארזי המתנה</p>
+        <h2 data-i18n="pk.title">שלוש דרכים להגיד תודה.</h2>
+        <p class="section__lead" data-i18n="pk.lead">כל המארזים ארוזים בקופסת מתנה מבד, עם כרטיס אישי בשם החברה. אפשר לבחור מידות וצבעים לכל עובד, או לתת לכל אחד לבחור בעצמו.</p>
+      </div>
+
+      <div class="packages">
+        <article class="pkg">
+          <img class="pkg__img" src="photos/single-set.webp" width="434" height="385" loading="lazy" alt="" data-i18n-alt="img.pk1">
+          <div class="pkg__body">
+            <p class="pkg__label" data-i18n="pk1.label">מארז basic</p>
+            <h3 data-i18n="pk1.name">לילה טוב</h3>
+            <p data-i18n="pk1.desc">מארז basic הקלאסי: ציפה לשמיכה וציפית תואמת מכותנה אורגנית. מחווה קטנה, מדויקת ומפנקת.</p>
+            <ul class="pkg__list">
+              <li data-i18n="pk1.i1">ציפה לשמיכה (יחיד או זוגי)</li>
+              <li data-i18n="pk1.i2">ציפית לכרית</li>
+              <li data-i18n="pk1.i3">קופסת מתנה + כרטיס אישי</li>
+            </ul>
+            <p class="pkg__for" data-i18n="pk1.for">מתאים ל: ימי הולדת, קליטת עובדים, תודה על פרויקט</p>
+          </div>
+        </article>
+
+        <article class="pkg pkg--featured">
+          <p class="pkg__badge" data-i18n="pk2.badge">הנבחר ביותר</p>
+          <img class="pkg__img" src="photos/double-set.webp" width="434" height="385" loading="lazy" alt="" data-i18n-alt="img.pk2">
+          <div class="pkg__body">
+            <p class="pkg__label" data-i18n="pk2.label">מארז מלא</p>
+            <h3 data-i18n="pk2.name">שינה עמוקה</h3>
+            <p data-i18n="pk2.desc">סט מצעים מלא מכותנה אורגנית – כל מה שצריך כדי להפוך את המיטה למקום הכי טוב בבית.</p>
+            <ul class="pkg__list">
+              <li data-i18n="pk2.i1">ציפה לשמיכה</li>
+              <li data-i18n="pk2.i2">סדין עם גומי</li>
+              <li data-i18n="pk2.i3">2 ציפיות לכרית</li>
+              <li data-i18n="pk2.i4">קופסת מתנה + כרטיס אישי</li>
+            </ul>
+            <p class="pkg__for" data-i18n="pk2.for">מתאים ל: מתנות חג, סוף שנה, אירועי חברה</p>
+          </div>
+        </article>
+
+        <article class="pkg">
+          <img class="pkg__img" src="photos/cloud-hug-wide.webp" width="625" height="286" loading="lazy" alt="" data-i18n-alt="img.pk3">
+          <div class="pkg__body">
+            <p class="pkg__label" data-i18n="pk3.label">מארז פרימיום</p>
+            <h3 data-i18n="pk3.name">מנוחה מלאה</h3>
+            <p data-i18n="pk3.desc">סט המצעים המלא יחד עם שמיכת הענן של basic – רכה, אוורירית ומתאימה לכל עונות השנה.</p>
+            <ul class="pkg__list">
+              <li data-i18n="pk3.i1">סט מצעים מלא</li>
+              <li data-i18n="pk3.i2">שמיכת ענן</li>
+              <li data-i18n="pk3.i3">בחירת צבע לכל עובד</li>
+              <li data-i18n="pk3.i4">קופסת מתנה + כרטיס אישי</li>
+            </ul>
+            <p class="pkg__for" data-i18n="pk3.for">מתאים ל: הנהלה, ותק, הוקרה מיוחדת</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="custom">
+        <div>
+          <h3 data-i18n="custom.title">צריכים משהו אחר?</h3>
+          <p data-i18n="custom.text">נבנה איתכם מארז בהתאמה אישית – לפי תקציב, כמות, צבעים או מיתוג. מ־20 מתנות ומעלה, עם תמחור כמויות.</p>
+        </div>
+        <a href="#quote" class="btn btn--ghost" data-i18n="custom.cta">לתכנון מארז מותאם</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="section section--tint" id="collection">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="col.eyebrow">הקולקציה</p>
+        <h2 data-i18n="col.title">פשוט. נקי. עשוי להחזיק.</h2>
+        <p class="section__lead" data-i18n="col.lead">מצעים בסיסיים מ־100% כותנה אורגנית סרוקה ומוברשת, בצבעים שקטים שמתאימים לכל חדר שינה. בלי הדפסים, בלי טרנדים – רק בד מצוין שנהיה רך יותר מכביסה לכביסה.</p>
+      </div>
+      <div class="products">
+        <article class="product">
+          <img class="product__img" src="photos/duvet-texture.webp" loading="lazy" alt="" data-i18n-alt="img.p1">
+          <h3 data-i18n="col.p1t">סדינים</h3>
+          <p data-i18n="col.p1p">סדין basic עם גומי, מתאים לאורך 200 ס״מ ולגובה מזרן עד 30 ס״מ.</p>
+        </article>
+        <article class="product">
+          <img class="product__img" src="photos/bed-pillows.webp" loading="lazy" alt="" data-i18n-alt="img.p2">
+          <h3 data-i18n="col.p2t">ציפות לשמיכה</h3>
+          <p data-i18n="col.p2p">ציפות לשמיכה ביחיד, זוגי וקינג – נקיות, חלקות ובגוונים שקטים.</p>
+        </article>
+        <article class="product">
+          <img class="product__img" src="photos/pillows-thumb.webp" loading="lazy" alt="" data-i18n-alt="img.p3">
+          <h3 data-i18n="col.p3t">ציפיות</h3>
+          <p data-i18n="col.p3p">ציפיות תואמות לכל סט, בגימור איכותי במיוחד.</p>
+        </article>
+        <article class="product">
+          <img class="product__img" src="photos/cloud-thumb.webp" loading="lazy" alt="" data-i18n-alt="img.p4">
+          <h3 data-i18n="col.p4t">שמיכות ענן</h3>
+          <p data-i18n="col.p4p">מעטפת כותנה אורגנית ומילוי אוורירי שיוצר תחושת ענן. יחיד וזוגי (200/220), לכל העונות.</p>
+        </article>
+      </div>
+      <div class="swatches">
+        <p data-i18n="col.colors">גוונים:</p>
+        <ul>
+          <li><span style="--c:#f7f6f2"></span><em data-i18n="col.c1">לבן</em></li>
+          <li><span style="--c:#d2cfb7"></span><em data-i18n="col.c2">שמנת</em></li>
+          <li><span style="--c:#c6c7cd"></span><em data-i18n="col.c3">אפור בהיר</em></li>
+          <li><span style="--c:#79827f"></span><em data-i18n="col.c4">ירוק אפרפר</em></li>
+          <li><span style="--c:#3f4046"></span><em data-i18n="col.c5">פחם</em></li>
+          <li><span style="--c:#c6aa74"></span><em data-i18n="col.c6">חרדל</em></li>
+          <li><span style="--c:#c292a2"></span><em data-i18n="col.c7">ורוד מעושן</em></li>
+          <li><span style="--c:#6f4551"></span><em data-i18n="col.c8">שזיף</em></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANIC -->
+  <section class="section" id="organic">
+    <div class="wrap split">
+      <div class="split__visual" aria-hidden="true">
+        <div class="weave"></div>
+      </div>
+      <div>
+        <p class="eyebrow" data-i18n="org.eyebrow">למה כותנה אורגנית</p>
+        <h2 data-i18n="org.title">טוב לגוף, טוב לשינה, טוב לעולם.</h2>
+        <ul class="ticks">
+          <li><strong data-i18n="org.t1">נושמת</strong><span data-i18n="org.p1">סיבים טבעיים שמווסתים חום ולחות – פחות הזעה בלילות החמים.</span></li>
+          <li><strong data-i18n="org.t2">עדינה לעור</strong><span data-i18n="org.p2">גידול ללא חומרי הדברה סינתטיים ועיבוד ללא כימיקלים קשים.</span></li>
+          <li><strong data-i18n="org.t3">מחזיקה שנים</strong><span data-i18n="org.p3">סיבים ארוכים ואריגה צפופה – הבד מתרכך עם הזמן ולא מתבלה.</span></li>
+          <li><strong data-i18n="org.t4">בחירה אחראית</strong><span data-i18n="org.p4">פחות מים, אדמה בריאה יותר – מתנה שמתיישבת עם יעדי ה־ESG של החברה.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section--tint" id="how">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="how.eyebrow">איך זה עובד</p>
+        <h2 data-i18n="how.title">אתם בוחרים. אנחנו דואגים לכל השאר.</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3 data-i18n="how.s1t">בוחרים מארז</h3>
+          <p data-i18n="how.s1p">משאירים פרטים ומקבלים הצעת מחיר תוך יום עסקים, כולל דוגמה פיזית לפי הצורך.</p>
+        </li>
+        <li>
+          <h3 data-i18n="how.s2t">מתאימים אישית</h3>
+          <p data-i18n="how.s2p">לוגו על הקופסה, ברכה בכרטיס, ובחירת מידות וצבעים – מרוכז או דרך טופס לכל עובד.</p>
+        </li>
+        <li>
+          <h3 data-i18n="how.s3t">אנחנו אורזים</h3>
+          <p data-i18n="how.s3p">כל מארז נארז ביד ונבדק לפני יציאה. עדכונים שוטפים לאורך הדרך.</p>
+        </li>
+        <li>
+          <h3 data-i18n="how.s4t">מגיע ליעד</h3>
+          <p data-i18n="how.s4p">משלוח מרוכז למשרד או ישירות לבית כל עובד, בכל רחבי הארץ.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- OCCASIONS -->
+  <section class="section" id="occasions">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="occ.eyebrow">לאורך כל השנה</p>
+        <h2 data-i18n="occ.title">כל רגע הוא הזדמנות לאכפתיות.</h2>
+      </div>
+      <ul class="chips">
+        <li data-i18n="occ.1">ראש השנה</li>
+        <li data-i18n="occ.2">פסח</li>
+        <li data-i18n="occ.3">קליטת עובדים חדשים</li>
+        <li data-i18n="occ.4">הולדת תינוק</li>
+        <li data-i18n="occ.5">מעבר דירה</li>
+        <li data-i18n="occ.6">ותק ושנות עבודה</li>
+        <li data-i18n="occ.7">סיום פרויקט או רבעון</li>
+        <li data-i18n="occ.8">חזרה ממילואים</li>
+        <li data-i18n="occ.9">פרישה</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--tint" id="faq">
+    <div class="wrap wrap--narrow">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="faq.eyebrow">שאלות נפוצות</p>
+        <h2 data-i18n="faq.title">מה ששואלים אותנו.</h2>
+      </div>
+      <details>
+        <summary data-i18n="faq.q1">מה הכמות המינימלית להזמנה?</summary>
+        <p data-i18n="faq.a1">מארזים מוכנים ניתן להזמין מ־10 יחידות. מארזים בהתאמה אישית ותמחור כמויות – מ־20 יחידות.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q2">איך בוחרים מידות לכל עובד?</summary>
+        <p data-i18n="faq.a2">אפשר לבחור מידה אחת לכולם, לשלוח לנו רשימה, או שנשלח לכל עובד קישור אישי לבחירת מידה וצבע – בלי שתצטרכו לנהל את זה.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q3">כמה זמן לוקח משלוח?</summary>
+        <p data-i18n="faq.a3">מארזים מהמלאי יוצאים תוך 5–10 ימי עסקים. לקראת חגים מומלץ להזמין לפחות 3–4 שבועות מראש.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q4">אפשר להוסיף את הלוגו שלנו?</summary>
+        <p data-i18n="faq.a4">כן. הלוגו מוטבע על קופסת המתנה ועל הכרטיס. המוצרים עצמם נשארים נקיים – כך שהעובדים ישמחו להשתמש בהם בבית.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q5">מה אם מידה לא מתאימה?</summary>
+        <p data-i18n="faq.a5">כל עובד יכול להחליף מידה או צבע תוך 30 יום, ישירות מולנו.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.q6">האם יש חשבונית מס לחברה?</summary>
+        <p data-i18n="faq.a6">כמובן. אנחנו עובדים מול חברות עם הצעת מחיר מסודרת, הזמנת רכש וחשבונית מס.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM -->
+  <section class="section quote" id="quote">
+    <div class="wrap split split--form">
+      <div>
+        <p class="eyebrow" data-i18n="q.eyebrow">בואו נדבר</p>
+        <h2 data-i18n="q.title">תנו לצוות שלכם לילה טוב.</h2>
+        <p class="section__lead" data-i18n="q.lead">ספרו לנו קצת על החברה ועל האירוע, ונחזור אליכם עם הצעת מחיר ורעיונות תוך יום עסקים.</p>
+        <ul class="contact">
+          <li><a href="https://www.basic-studio.com" target="_blank" rel="noopener" data-i18n="q.shop">לחנות הפרטית שלנו ←</a></li>
+        </ul>
+      </div>
+      <form class="form" id="quoteForm" novalidate>
+        <div class="form__row">
+          <label><span data-i18n="q.name">שם מלא</span><input name="name" required autocomplete="name"></label>
+          <label><span data-i18n="q.company">חברה</span><input name="company" required autocomplete="organization"></label>
+        </div>
+        <div class="form__row">
+          <label><span data-i18n="q.email">אימייל</span><input name="email" type="email" required autocomplete="email" dir="ltr"></label>
+          <label><span data-i18n="q.phone">טלפון</span><input name="phone" type="tel" autocomplete="tel" dir="ltr"></label>
+        </div>
+        <div class="form__row">
+          <label><span data-i18n="q.qty">מספר מתנות</span><input name="quantity" type="number" min="1" inputmode="numeric"></label>
+          <label><span data-i18n="q.pkg">מארז</span>
+            <select name="package">
+              <option value="good-night" data-i18n="q.o1">לילה טוב</option>
+              <option value="deep-sleep" data-i18n="q.o2" selected>שינה עמוקה</option>
+              <option value="full-rest" data-i18n="q.o3">מנוחה מלאה</option>
+              <option value="custom" data-i18n="q.o4">בהתאמה אישית</option>
+              <option value="unsure" data-i18n="q.o5">עוד לא בטוחים</option>
+            </select>
+          </label>
+        </div>
+        <label><span data-i18n="q.date">תאריך רצוי למסירה</span><input name="date" type="date"></label>
+        <label><span data-i18n="q.msg">עוד משהו שכדאי שנדע?</span><textarea name="message" rows="4"></textarea></label>
+        <button class="btn btn--full" type="submit" data-i18n="q.submit">שליחת בקשה להצעת מחיר</button>
+        <p class="form__note" id="formNote" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div>
+      <a href="#top" class="logo">basic<span class="logo__sub">for business</span></a>
+      <p data-i18n="f.tag">מצעים מכותנה אורגנית. מתנות לעובדים שמגיע להם לנוח.</p>
+    </div>
+    <div class="footer__links">
+      <a href="#packages" data-i18n="nav.packages">מארזים</a>
+      <a href="#collection" data-i18n="nav.collection">המוצרים</a>
+      <a href="#faq" data-i18n="nav.faq">שאלות</a>
+      <a href="#quote" data-i18n="nav.cta">הצעת מחיר</a>
+    </div>
+    <p class="footer__copy">© <span id="year"></span> Basic Studio</p>
+  </div>
+</footer>
+
+<script>
+// Bilingual content: Hebrew lives in index.html (default, RTL); English is defined here.
+// Hebrew strings are captured from the page on load so both languages can be toggled.
+const EN = {
+  "demo.bar": "Demo site: a concept prepared for basic. This is not the company's official website.",
+  "nav.why": "Why sleep",
+  "nav.packages": "Gift boxes",
+  "nav.collection": "Products",
+  "nav.how": "How it works",
+  "nav.faq": "FAQ",
+  "nav.cta": "Get a quote",
+
+  "hero.eyebrow": "basic for business · employee gifts",
+  "hero.title": "Great work starts<br>with a good night.",
+  "hero.lead": "Organic cotton bedding gift boxes for your team: a gift people use every night, and one that reminds them every morning that their workplace cares.",
+  "hero.cta1": "See the gift boxes",
+  "hero.cta2": "Request a quote",
+  "hero.f1": "100% combed organic cotton",
+  "hero.f2": "Your logo & a personal card",
+  "hero.f3": "Delivered to the office or to each home",
+  "hero.tag": "Sleep well,<br>and thank you.",
+
+  "why.eyebrow": "Why sleep",
+  "why.title": "Real wellbeing doesn't clock out at five.",
+  "why.lead": "We invest in the right chair, the right screen and a good lunch. But a third of life is spent in bed, and that's where tomorrow morning is decided.",
+  "why.c1t": "They come back rested",
+  "why.c1p": "Good sleep directly shapes focus, mood, creativity and decision-making. People who sleep well simply work better, and enjoy it more.",
+  "why.c2t": "A gift that gets used",
+  "why.c2p": "Not another water bottle or notebook left in a drawer. Quality bedding is used every night for years, a quiet reminder of who gave it.",
+  "why.c3t": "It says something about your culture",
+  "why.c3p": "A gift that says \"your rest matters to us\" builds belonging and loyalty, and shows that employee wellbeing is a value, not just a budget line.",
+
+  "band.quote": "“It's easy to talk about wellbeing. The most direct way to act on it is to help people sleep well.”",
+
+  "pk.eyebrow": "Gift boxes",
+  "pk.title": "Three ways to say thank you.",
+  "pk.lead": "Every box comes gift-wrapped with a personal card from your company. Choose sizes and colours for each employee, or let everyone pick their own.",
+  "pk1.label": "The basic box",
+  "pk1.name": "Good Night",
+  "pk1.desc": "Our classic basic box: an organic cotton duvet cover with a matching pillowcase. A small, thoughtful treat.",
+  "pk1.i1": "Duvet cover (single or double)",
+  "pk1.i2": "Pillowcase",
+  "pk1.i3": "Gift box + personal card",
+  "pk1.for": "Great for: birthdays, onboarding, project wins",
+  "pk2.badge": "Most popular",
+  "pk2.label": "The full set",
+  "pk2.name": "Deep Sleep",
+  "pk2.desc": "A complete organic cotton bedding set: everything needed to make the bed the best place in the house.",
+  "pk2.i1": "Duvet cover",
+  "pk2.i2": "Fitted sheet",
+  "pk2.i3": "2 pillowcases",
+  "pk2.i4": "Gift box + personal card",
+  "pk2.for": "Great for: holiday gifts, year-end, company events",
+  "pk3.label": "Premium",
+  "pk3.name": "Full Rest",
+  "pk3.desc": "The full bedding set together with the basic cloud blanket: soft, airy and right for every season.",
+  "pk3.i1": "Full bedding set",
+  "pk3.i2": "Cloud blanket",
+  "pk3.i3": "A colour choice for each employee",
+  "pk3.i4": "Gift box + personal card",
+  "pk3.for": "Great for: leadership, work anniversaries, special recognition",
+  "custom.title": "Need something different?",
+  "custom.text": "We'll build a custom box around your budget, quantity, colours or branding. Volume pricing from 20 gifts.",
+  "custom.cta": "Plan a custom box",
+
+  "col.eyebrow": "The collection",
+  "col.title": "Simple. Clean. Made to last.",
+  "col.lead": "Basic bedding in 100% combed and brushed organic cotton, in quiet colours that suit any bedroom. No prints, no trends, just excellent fabric that gets softer with every wash.",
+  "col.p1t": "Sheets",
+  "col.p1p": "The basic fitted sheet, made for 200 cm long mattresses up to 30 cm deep.",
+  "col.p2t": "Duvet covers",
+  "col.p2p": "Single, double and king duvet covers: clean, smooth and in calm tones.",
+  "col.p3t": "Pillowcases",
+  "col.p3p": "Matching pillowcases for every set, with an exceptionally fine finish.",
+  "col.p4t": "Cloud blankets",
+  "col.p4p": "An organic cotton shell with an airy fill that feels like a cloud. Single and double (200/220), for every season.",
+  "col.colors": "Colours:",
+  "col.c1": "White",
+  "col.c2": "Cream",
+  "col.c3": "Light grey",
+  "col.c4": "Grey-green",
+  "col.c5": "Charcoal",
+  "col.c6": "Mustard",
+  "col.c7": "Smoky pink",
+  "col.c8": "Plum",
+
+  "img.hero": "A bed made with white basic organic cotton bedding by a sunlit window",
+  "img.pk1": "Single basic set: duvet cover and pillowcase, seen from above",
+  "img.pk2": "Double basic set: duvet cover and two pillowcases, seen from above",
+  "img.pk3": "A woman hugging a white basic cloud blanket",
+  "img.p1": "Close-up of soft, crinkled organic cotton",
+  "img.p2": "White duvet cover and pillowcases on a made bed",
+  "img.p3": "Two white pillows",
+  "img.p4": "A woman carrying a cloud blanket",
+
+  "org.eyebrow": "Why organic cotton",
+  "org.title": "Good for the body, for sleep, and for the planet.",
+  "org.t1": "Breathable",
+  "org.p1": "Natural fibres that regulate heat and moisture, so hot nights are less sweaty.",
+  "org.t2": "Gentle on skin",
+  "org.p2": "Grown without synthetic pesticides and processed without harsh chemicals.",
+  "org.t3": "Lasts for years",
+  "org.p3": "Combed long fibres that get softer over time instead of wearing out.",
+  "org.t4": "A responsible choice",
+  "org.p4": "Less water, healthier soil: a gift that fits your company's ESG goals.",
+
+  "how.eyebrow": "How it works",
+  "how.title": "You choose. We take care of the rest.",
+  "how.s1t": "Pick a box",
+  "how.s1p": "Leave your details and get a quote within one business day, with a physical sample if you'd like one.",
+  "how.s2t": "Make it yours",
+  "how.s2p": "Your logo on the box, your message on the card, sizes and colours chosen centrally or through a form for each employee.",
+  "how.s3t": "We pack",
+  "how.s3p": "Every box is hand-packed and checked before it leaves. We keep you updated along the way.",
+  "how.s4t": "It arrives",
+  "how.s4p": "Delivered in bulk to the office, or directly to each employee's home, anywhere in Israel.",
+
+  "occ.eyebrow": "All year round",
+  "occ.title": "Every moment is a chance to show you care.",
+  "occ.1": "Rosh Hashanah",
+  "occ.2": "Passover",
+  "occ.3": "Onboarding new hires",
+  "occ.4": "New baby",
+  "occ.5": "Moving home",
+  "occ.6": "Work anniversaries",
+  "occ.7": "End of a project or quarter",
+  "occ.8": "Back from reserve duty",
+  "occ.9": "Retirement",
+
+  "faq.eyebrow": "FAQ",
+  "faq.title": "What people ask us.",
+  "faq.q1": "What's the minimum order?",
+  "faq.a1": "Ready-made boxes can be ordered from 10 units. Custom boxes and volume pricing start at 20 units.",
+  "faq.q2": "How do we choose sizes for each employee?",
+  "faq.a2": "Choose one size for everyone, send us a list, or we'll send each employee a personal link to pick their own size and colour, so you don't have to manage it.",
+  "faq.q3": "How long does delivery take?",
+  "faq.a3": "In-stock boxes ship within 5–10 business days. Before holidays we recommend ordering at least 3–4 weeks ahead.",
+  "faq.q4": "Can you add our logo?",
+  "faq.a4": "Yes. Your logo goes on the gift box and the card. The products themselves stay clean, so employees are happy to use them at home.",
+  "faq.q5": "What if a size doesn't fit?",
+  "faq.a5": "Each employee can exchange size or colour within 30 days, directly with us.",
+  "faq.q6": "Do you issue a tax invoice to the company?",
+  "faq.a6": "Of course. We work with companies through formal quotes, purchase orders and tax invoices.",
+
+  "q.eyebrow": "Let's talk",
+  "q.title": "Give your team a good night.",
+  "q.lead": "Tell us a little about your company and the occasion, and we'll get back to you with a quote and ideas within one business day.",
+  "q.whatsapp": "WhatsApp for business",
+  "q.shop": "Visit our retail shop →",
+  "q.name": "Full name",
+  "q.company": "Company",
+  "q.email": "Email",
+  "q.phone": "Phone",
+  "q.qty": "Number of gifts",
+  "q.pkg": "Gift box",
+  "q.o1": "Good Night",
+  "q.o2": "Deep Sleep",
+  "q.o3": "Full Rest",
+  "q.o4": "Custom",
+  "q.o5": "Not sure yet",
+  "q.date": "Preferred delivery date",
+  "q.msg": "Anything else we should know?",
+  "q.submit": "Request a quote",
+
+  "f.tag": "Organic cotton bedding. Gifts for people who deserve to rest."
+};
+
+const META = {
+  he: { title: document.title, sent: "תודה! הבקשה התקבלה. (בתצוגה המקדימה הטופס לא נשלח בפועל.)", invalid: "נא למלא שם, חברה ואימייל תקין." },
+  en: { title: "basic · Sleep gifts for your team", sent: "Thank you! Request received. (In this preview the form is not actually sent.)", invalid: "Please fill in your name, company and a valid email." }
+};
+
+const QUOTE_EMAIL = "business@basic-studio.com";
+
+const HE_ALT = {
+  "img.hero": "מיטה מוצעת במצעי basic לבנים מכותנה אורגנית ליד חלון מואר",
+  "img.pk1": "סט basic יחיד: ציפה לשמיכה וציפית, מבט מלמעלה",
+  "img.pk2": "סט basic זוגי: ציפה לשמיכה ושתי ציפיות, מבט מלמעלה",
+  "img.pk3": "אישה מחבקת שמיכת ענן לבנה של basic",
+  "img.p1": "תקריב של כותנה אורגנית רכה",
+  "img.p2": "ציפה וציפיות לבנות על מיטה מוצעת",
+  "img.p3": "שתי כריות לבנות",
+  "img.p4": "אישה נושאת שמיכת ענן"
+};
+
+const nodes = document.querySelectorAll("[data-i18n]");
+const altNodes = document.querySelectorAll("[data-i18n-alt]");
+const HE = {};
+nodes.forEach(el => { HE[el.dataset.i18n] = el.innerHTML; });
+
+let lang = "he";
+
+function setLang(next) {
+  lang = next;
+  const dict = next === "en" ? EN : HE;
+  nodes.forEach(el => {
+    const val = dict[el.dataset.i18n];
+    if (val !== undefined) el.innerHTML = val;
+  });
+  altNodes.forEach(el => {
+    el.alt = (next === "en" ? EN : HE_ALT)[el.dataset.i18nAlt] || "";
+  });
+  document.documentElement.lang = next;
+  document.documentElement.dir = next === "en" ? "ltr" : "rtl";
+  document.title = META[next].title;
+  document.getElementById("langToggle").textContent = next === "en" ? "עב" : "EN";
+  document.getElementById("formNote").textContent = "";
+  try { localStorage.setItem("lang", next); } catch (e) {}
+  try { const url = new URL(location.href); url.searchParams.set("lang", next); history.replaceState(null, "", url); } catch (e) {}
+}
+
+document.getElementById("langToggle").addEventListener("click", () => {
+  setLang(lang === "he" ? "en" : "he");
+});
+
+let initial = null;
+try { initial = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+if (!initial) { try { initial = localStorage.getItem("lang"); } catch (e) {} }
+setLang(initial === "en" ? "en" : "he");
+
+// Quote form: no backend yet, so it composes an email to the business inbox.
+document.getElementById("quoteForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const form = e.target;
+  const note = document.getElementById("formNote");
+  const required = ["name", "company", "email"].map(n => form.elements[n]);
+  let ok = true;
+  required.forEach(input => {
+    const valid = input.value.trim() && input.checkValidity();
+    input.classList.toggle("is-invalid", !valid);
+    if (!valid) ok = false;
+  });
+  if (!ok) { note.textContent = META[lang].invalid; return; }
+
+  const f = form.elements;
+  const pkg = f.package.options[f.package.selectedIndex].text;
+  const lines = [
+    `Name: ${f.name.value}`,
+    `Company: ${f.company.value}`,
+    `Email: ${f.email.value}`,
+    `Phone: ${f.phone.value}`,
+    `Quantity: ${f.quantity.value}`,
+    `Package: ${pkg}`,
+    `Delivery date: ${f.date.value}`,
+    "",
+    f.message.value
+  ];
+  const subject = `Corporate gift quote – ${f.company.value}`;
+  void subject; // preview only: the live site emails this to QUOTE_EMAIL
+  note.textContent = META[lang].sent;
+  form.reset();
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+</script>
+
+</body>
+</html>
